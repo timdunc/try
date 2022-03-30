@@ -11,6 +11,11 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  left: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
 }));
 
 const App = () => {
@@ -19,7 +24,7 @@ const App = () => {
     <div>
       <Navbar />
       <Grid container>
-        <Grid item sm={2} xs={2}>
+        <Grid item sm={2} xs={2} className={classes.left}>
           <Leftbar />
         </Grid>
         <Grid item sm={7} xs={10}>
