@@ -6,6 +6,11 @@ import Navbar from "./components/Navbar";
 import Rightbar from "./components/Rightbar";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
+  },
   right: {
     [theme.breakpoints.down("sm")]: {
       display: "none",
@@ -30,7 +35,7 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <Grid container>
+      <Grid container className={classes.container}>
         <Grid item sm={2} xs={2} className={classes.left}>
           <Leftbar />
         </Grid>
