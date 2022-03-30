@@ -36,13 +36,13 @@ const App = () => {
     <div>
       <Navbar />
       <Grid container className={classes.container}>
-        <Grid item sm={2} xs={2} className={classes.left}>
+        <Grid item sm={0} xs={0} className={classes.left}>
           <Leftbar />
         </Grid>
-        <Grid item sm={7} xs={10} className={classes.center}>
+        <Grid item sm={12} xs={12} className={classes.center}>
           <Feed />
         </Grid>
-        <Grid item sm={3} className={classes.right}>
+        <Grid item sm={0} xs={0} className={classes.right}>
           <Rightbar />
         </Grid>
       </Grid>
