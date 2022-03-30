@@ -9,12 +9,18 @@ const useStyles = makeStyles((theme) => ({
   right: {
     [theme.breakpoints.down("sm")]: {
       display: "none",
+      width: 0,
     },
   },
   left: {
     [theme.breakpoints.down("sm")]: {
       display: "none",
       width: 0,
+    },
+  },
+  center: {
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
     },
   },
 }));
@@ -28,7 +34,7 @@ const App = () => {
         <Grid item sm={2} xs={2} className={classes.left}>
           <Leftbar />
         </Grid>
-        <Grid item sm={7} xs={10}>
+        <Grid item sm={7} xs={10} className={classes.center}>
           <Feed />
         </Grid>
         <Grid item sm={3} className={classes.right}>
