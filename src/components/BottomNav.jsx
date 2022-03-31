@@ -12,7 +12,7 @@ import {
   Restore,
 } from "@material-ui/icons";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     BottomNav: {
@@ -29,7 +29,7 @@ const BottomNav = () => {
 
   const [value, setValue] = useState(0);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <Box
