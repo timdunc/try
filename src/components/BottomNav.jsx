@@ -17,7 +17,7 @@ import { useState } from "react";
 const useStyles = makeStyles((theme) => ({
     BottomNav: {
         [theme.breakpoints.up("sm")]: {
-            height: "100vh",
+            display: "none",
           },
     }
 }));

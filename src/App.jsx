@@ -32,21 +32,35 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
   return (
-    <div>
-      <Navbar />
-      <Grid container className={classes.container}>
-        <Grid item sm={0} xs={0} md={2} lg={2} className={classes.left}>
-          <Leftbar />
+    <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div>
+        <Navbar />
+      </div>
+      <div>
+        <Grid container className={classes.container}>
+          <Grid item sm={0} xs={0} md={2} lg={2} className={classes.left}>
+            <Leftbar />
+          </Grid>
+          <Grid
+            item
+            sm={12}
+            xs={12}
+            md={7}
+            lg={7}
+            padding="0px"
+            className={classes.center}
+          >
+            <Feed />
+          </Grid>
+          <Grid item sm={0} xs={0} md={3} lg={3} className={classes.right}>
+            <Rightbar />
+          </Grid>
         </Grid>
-        <Grid item sm={12} xs={12} md={7} lg={7} padding="0px" className={classes.center}>
-          <Feed />
-        </Grid>
-        <Grid item sm={0} xs={0} md={3} lg={3} className={classes.right}>
-          <Rightbar />
-        </Grid>
-      </Grid>
-      <Add />
-      <BottomNav />
+        <Add />
+      </div>
+      <div>
+        <BottomNav />
+      </div>
     </div>
   );
 };

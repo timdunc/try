@@ -3,7 +3,7 @@ import Post from "./Post";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    paddingTop: theme.spacing(10),
+    paddingTop: theme.spacing(2),
   },
 }));
 
