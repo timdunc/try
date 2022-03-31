@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     [theme.breakpoints.down("sm")]: {
       width: "100vw",
+      padding: 0,
     },
   },
   right: {
@@ -47,7 +48,6 @@ const App = () => {
             xs={12}
             md={7}
             lg={7}
-            padding={0}
             className={classes.center}
           >
             <Feed />
