@@ -12,10 +12,11 @@ import {
   Restore,
 } from "@material-ui/icons";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     BottomNav: {
-        [theme.breakpoints.down("u")]: {
+        [theme.breakpoints.up("sm")]: {
             height: "100vh",
           },
     }
