@@ -1,5 +1,6 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import Add from "./components/Add";
+import BottomNav from "./components/BottomNav";
 import Feed from "./components/Feed";
 import Leftbar from "./components/Leftbar";
 import Navbar from "./components/Navbar";
@@ -8,24 +9,22 @@ import Rightbar from "./components/Rightbar";
 const useStyles = makeStyles((theme) => ({
   container: {
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
+      width: "100vw",
     },
   },
   right: {
     [theme.breakpoints.down("sm")]: {
       display: "none",
-      width: 0,
     },
   },
   left: {
     [theme.breakpoints.down("sm")]: {
       display: "none",
-      width: 0,
     },
   },
   center: {
     [theme.breakpoints.down("sm")]: {
-      padding: 0,
+      width: "100%",
     },
   },
 }));
@@ -36,17 +35,18 @@ const App = () => {
     <div>
       <Navbar />
       <Grid container className={classes.container}>
-        <Grid item sm={2} xs={0} className={classes.left}>
+        <Grid item sm={0} xs={0} md={2} lg={2} className={classes.left}>
           <Leftbar />
         </Grid>
-        <Grid item sm={7} xs={12} className={classes.center}>
+        <Grid item sm={12} xs={12} md={7} lg={7} padding="0px" className={classes.center}>
           <Feed />
         </Grid>
-        <Grid item sm={3} xs={0} className={classes.right}>
+        <Grid item sm={0} xs={0} md={3} lg={3} className={classes.right}>
           <Rightbar />
         </Grid>
       </Grid>
       <Add />
+      <BottomNav />
     </div>
   );
 };
