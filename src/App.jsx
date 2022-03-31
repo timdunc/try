@@ -47,7 +47,7 @@ const App = () => {
             xs={12}
             md={7}
             lg={7}
-            padding="0px"
+            padding={0}
             className={classes.center}
           >
             <Feed />
