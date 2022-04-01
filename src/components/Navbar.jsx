@@ -9,7 +9,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Cancel, Mail, Notifications, Search } from "@material-ui/icons";
-import { useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -68,7 +70,25 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+
   const classes = useStyles({ open });
+
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const [user, setUser] = useState({});
+
+  const { user: currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(
+        `https://sinzi.herokuapp.com/api/users?userId=${currentUser._id}`
+      );
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [currentUser._id]);
+
   return (
     <AppBar position="fixed">
       <Toolbar className={classes.toolbar}>
@@ -94,10 +114,7 @@ const Navbar = () => {
           <Badge badgeContent={2} color="secondary" className={classes.badge}>
             <Notifications />
           </Badge>
-          <Avatar
-            alt="Remy Sharp"
-            src="https://images.pexels.com/photos/8647814/pexels-photo-8647814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-          />
+          <Avatar alt={user.username} src={PF + user.profilePicture} />
         </div>
       </Toolbar>
     </AppBar>
