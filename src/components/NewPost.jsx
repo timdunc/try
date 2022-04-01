@@ -388,7 +388,7 @@ const NewPost = ({ post }) => {
         </CardContent>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            {/* <div
+            <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -443,8 +443,8 @@ const NewPost = ({ post }) => {
                   </Typography>
                 </div>
               )}
-            </div> */}
-            {comments.length <= 3 && (
+            </div>
+            {/* {comments.length <= 3 && (
               <>
                 {comments.map((comment) => (
                   <Comment
@@ -466,8 +466,8 @@ const NewPost = ({ post }) => {
                     newCom={forceUpdate}
                   />
                 ))}
-              </>
-            )}
+                </>
+                )} */}
           </CardContent>
         </Collapse>
       </Card>
