@@ -8,8 +8,10 @@ import {
   Checkbox,
   Collapse,
   IconButton,
+  InputBase,
   Link,
   makeStyles,
+  Slide,
   styled,
   Typography,
 } from "@material-ui/core";
@@ -20,6 +22,7 @@ import {
   FavoriteBorder,
   MoreVert,
   MoreVertRounded,
+  Send,
   Share,
   ShareRounded,
 } from "@material-ui/icons";
@@ -31,6 +34,7 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { format } from "timeago.js";
 import { useReducer } from "react";
+import Comment from "./Comment";
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -84,15 +88,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Expand = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-  })(({ theme, expand }) => ({
-    transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  }));
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+function TransitionRight(props) {
+    return <Slide {...props} direction="right" />;
+  }
 
 const NewPost = ({ post }) => {
   const classes = useStyles();
@@ -123,6 +131,12 @@ const NewPost = ({ post }) => {
   const [desc, setDesc] = useState("");
 
   const [newCom, forceUpdate] = useReducer((x) => x + 1 || x - 1, 0);
+
+  const [open, setOpen] = useState(false);
+
+  const [transition, setTransition] = useState(undefined);
+
+  const [openMessage, setOpenMessage] = useState(false);
 
   useEffect(() => {
     const fetchComment = async () => {
@@ -170,6 +184,48 @@ const NewPost = ({ post }) => {
     setIsLiked(post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
 
+  const handleClick = (Transition, type) => async (e) => {
+    e.preventDefault();
+
+    const newComment = {
+      userId: currentUser._id,
+      postId: post._id,
+      desc: desc,
+    };
+
+    if (desc !== "") {
+      try {
+        await axios.post(
+          "https://sinzi.herokuapp.com/api/comments/",
+          newComment
+        );
+        // socket.current.emit("sendNotification", {
+        //   senderId: currentUser.username,
+        //   receiverId: user._id,
+        //   type,
+        // });
+        // window.location.reload();
+        forceUpdate();
+        setTransition(() => Transition);
+        setOpenMessage(true);
+        setOpen(false);
+        setDesc("");
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const handleCloseMessage = () => {
+    setOpenMessage(false);
+  };
+
+  const lastComments = [].concat(
+    comments.at(0),
+    comments.at(1),
+    comments.at(2)
+  );
+
   return (
     <>
       <Card sx={{ maxWidth: 345 }} style={{ marginBottom: "10px" }}>
@@ -196,12 +252,12 @@ const NewPost = ({ post }) => {
               }
             />
             <div style={{ marginLeft: "-28px" }}>
-                <Typography style={{ fontWeight: "bold" }}>
-                  {user.username}
-                </Typography>
-                <Typography className={classes.userInfo}>
-                  {format(post.createdAt)}
-                </Typography>
+              <Typography style={{ fontWeight: "bold" }}>
+                {user.username}
+              </Typography>
+              <Typography className={classes.userInfo}>
+                {format(post.createdAt)}
+              </Typography>
             </div>
           </div>
           <IconButton aria-label="settings">
@@ -288,17 +344,26 @@ const NewPost = ({ post }) => {
             >
               <div style={{ marginLeft: "10px" }}>
                 {comments.length === 0 && (
-                  <Typography style={{ fontWeight: "bold", fontSize: "14px" }}>
+                  <Typography
+                    style={{ fontWeight: "bold", fontSize: "14px" }}
+                    onClick={handleExpandClick}
+                  >
                     No Comments yet
                   </Typography>
                 )}
                 {comments.length === 1 && (
-                  <Typography style={{ fontWeight: "bold", fontSize: "14px" }}>
+                  <Typography
+                    style={{ fontWeight: "bold", fontSize: "14px" }}
+                    onClick={handleExpandClick}
+                  >
                     {comments.length} Comment
                   </Typography>
                 )}
                 {comments.length > 1 && (
-                  <Typography style={{ fontWeight: "bold", fontSize: "14px" }}>
+                  <Typography
+                    style={{ fontWeight: "bold", fontSize: "14px" }}
+                    onClick={handleExpandClick}
+                  >
                     {comments.length} Comments
                   </Typography>
                 )}
@@ -323,34 +388,86 @@ const NewPost = ({ post }) => {
         </CardContent>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>Method:</Typography>
-            <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron
-              and set aside for 10 minutes.
-            </Typography>
-            <Typography paragraph>
-              Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-              over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-              stirring occasionally until lightly browned, 6 to 8 minutes.
-              Transfer shrimp to a large plate and set aside, leaving chicken
-              and chorizo in the pan. Add pimentón, bay leaves, garlic,
-              tomatoes, onion, salt and pepper, and cook, stirring often until
-              thickened and fragrant, about 10 minutes. Add saffron broth and
-              remaining 4 1/2 cups chicken broth; bring to a boil.
-            </Typography>
-            <Typography paragraph>
-              Add rice and stir very gently to distribute. Top with artichokes
-              and peppers, and cook without stirring, until most of the liquid
-              is absorbed, 15 to 18 minutes. Reduce heat to medium-low, add
-              reserved shrimp and mussels, tucking them down into the rice, and
-              cook again without stirring, until mussels have opened and rice is
-              just tender, 5 to 7 minutes more. (Discard any mussels that don’t
-              open.)
-            </Typography>
-            <Typography>
-              Set aside off of the heat to let rest for 10 minutes, and then
-              serve.
-            </Typography>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ display: "flex" }}>
+                <Avatar
+                  alt={currentUser.username}
+                  src={PF + currentUser.profilePicture}
+                  className={classes.contentAvatar}
+                />
+                <form
+                  className={classes.form}
+                  autoComplete="off"
+                  onSubmit={handleClick(TransitionRight, 2)}
+                >
+                  <InputBase
+                    className={classes.commentInput}
+                    sx={{ ml: 1, flex: 1 }}
+                    placeholder="Leave a comment"
+                    inputProps={{ "aria-label": "Leave a comment" }}
+                    onChange={(e) => setDesc(e.target.value)}
+                    style={{ width: "50vw" }}
+                  />
+                  <IconButton
+                    type="submit"
+                    sx={{ p: "10px" }}
+                    style={{ marginTop: "-4px" }}
+                    aria-label="send"
+                  >
+                    {/* <div onClick={handleClear}> */}
+                    <Send
+                      style={{ marginTop: "-4px", transform: "rotate(-45deg)" }}
+                    />
+                    {/* </div> */}
+                  </IconButton>
+                </form>
+              </div>
+              {comments.length >= 4 && (
+                <div>
+                  <Typography
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: "14px",
+                      cursor: "pointer",
+                    }}
+                    color="secondary"
+                    onClick={() => setOpen(true)}
+                  >
+                    See All
+                  </Typography>
+                </div>
+              )}
+            </div>
+            {comments.length <= 3 && (
+              <>
+                {comments.map((comment) => (
+                  <Comment
+                    key={comment._id}
+                    post={post}
+                    comment={comment}
+                    newCom={forceUpdate}
+                  />
+                ))}
+              </>
+            )}
+            {comments.length >= 4 && (
+              <>
+                {lastComments.map((comment) => (
+                  <Comment
+                    key={comment._id}
+                    post={post}
+                    comment={comment}
+                    newCom={forceUpdate}
+                  />
+                ))}
+              </>
+            )}
           </CardContent>
         </Collapse>
       </Card>
