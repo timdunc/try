@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     marginBottom: theme.spacing(5),
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
+      width: "100vw",
     },
   },
   container: {
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardModal: {
     [theme.breakpoints.down("md")]: {
-      width: "100%",
+      width: "100vw",
       height: "100%",
     },
   },
@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(-2),
     marginBottom: theme.spacing(-4),
     [theme.breakpoints.down("md")]: {
-      width: "100%",
+      width: "100vw",
     },
   },
   commentInput: {
@@ -302,7 +302,7 @@ const Post = ({ post }) => {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            marginTop: "-12px",
+            // marginTop: "-12px",
           }}
         >
           <div
@@ -493,7 +493,7 @@ const Post = ({ post }) => {
                     placeholder="Leave a comment"
                     inputProps={{ "aria-label": "Leave a comment" }}
                     onChange={(e) => setDesc(e.target.value)}
-                    style={{ width: "180px" }}
+                    style={{ width: "50vw" }}
                   />
                   <IconButton
                     type="submit"
@@ -527,7 +527,7 @@ const Post = ({ post }) => {
             </div>
             {comments.length <= 3 && (
               <>
-                {comments.map((comment, index) => (
+                {comments.map((comment) => (
                   <Comment
                     key={comment._id}
                     post={post}
@@ -563,7 +563,6 @@ const Post = ({ post }) => {
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  marginTop: "-12px",
                 }}
               >
                 <div
@@ -753,7 +752,7 @@ const Post = ({ post }) => {
                 left: 0,
                 bottom: 0,
                 backgroundColor: "white",
-                width: "100%",
+                width: "100vw",
               }}
             >
               <form
