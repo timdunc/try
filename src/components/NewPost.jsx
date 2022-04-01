@@ -388,7 +388,7 @@ const NewPost = ({ post }) => {
         </CardContent>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <div
+            {/* <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -412,7 +412,7 @@ const NewPost = ({ post }) => {
                     placeholder="Leave a comment"
                     inputProps={{ "aria-label": "Leave a comment" }}
                     onChange={(e) => setDesc(e.target.value)}
-                    style={{ width: "50vw" }}
+                    // style={{ width: "50vw" }}
                   />
                   <IconButton
                     type="submit"
@@ -420,11 +420,11 @@ const NewPost = ({ post }) => {
                     style={{ marginTop: "-4px" }}
                     aria-label="send"
                   >
-                    {/* <div onClick={handleClear}> */}
+                    <div>
                     <Send
                       style={{ marginTop: "-4px", transform: "rotate(-45deg)" }}
                     />
-                    {/* </div> */}
+                    </div>
                   </IconButton>
                 </form>
               </div>
@@ -443,7 +443,7 @@ const NewPost = ({ post }) => {
                   </Typography>
                 </div>
               )}
-            </div>
+            </div> */}
             {comments.length <= 3 && (
               <>
                 {comments.map((comment) => (
