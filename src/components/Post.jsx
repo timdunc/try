@@ -93,9 +93,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     marginTop: theme.spacing(-2),
     marginBottom: theme.spacing(-4),
-    [theme.breakpoints.down("md")]: {
-      width: "100vw",
-    },
+    // [theme.breakpoints.down("md")]: {
+    //   width: "100vw",
+    // },
   },
   commentInput: {
     marginLeft: "12px",

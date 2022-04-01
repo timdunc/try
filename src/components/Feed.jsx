@@ -8,7 +8,7 @@ import { AuthContext } from "../context/AuthContext";
 const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(10),
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       paddingTop: theme.spacing(8),
       paddingBottom: theme.spacing(7),
     },
