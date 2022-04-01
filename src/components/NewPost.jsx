@@ -388,30 +388,7 @@ const NewPost = ({ post }) => {
         </CardContent>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-          {comments.length <= 3 && (
-              <>
-                {comments.map((comment) => (
-                  <Comment
-                    key={comment._id}
-                    post={post}
-                    comment={comment}
-                    newCom={forceUpdate}
-                  />
-                ))}
-              </>
-            )}
-            {comments.length >= 4 && (
-              <>
-                {lastComments.map((comment) => (
-                  <Comment
-                    key={comment._id}
-                    post={post}
-                    comment={comment}
-                    newCom={forceUpdate}
-                  />
-                ))}
-              </>
-            )}
+          
           </CardContent>
         </Collapse>
       </Card>
