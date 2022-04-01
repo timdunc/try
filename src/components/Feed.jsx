@@ -1,6 +1,6 @@
 import { Container, makeStyles } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
-import Post from "./Post";
+import NewPost from "./NewPost";
 import SuggestedUsers from "./SuggestedUsers";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
@@ -42,7 +42,7 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
       <Container className={classes.container}>
         <>
         {posts.map((p, index) => (
-            <Post
+            <NewPost
               key={index}
               post={p}
               socket={socket}
