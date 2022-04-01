@@ -234,7 +234,10 @@ const Post = ({ post }) => {
 
     if (desc !== "") {
       try {
-        await axios.post("https://sinzi.herokuapp.com/api/comments/", newComment);
+        await axios.post(
+          "https://sinzi.herokuapp.com/api/comments/",
+          newComment
+        );
         socket.current.emit("sendNotification", {
           senderId: currentUser.username,
           receiverId: user._id,
@@ -251,7 +254,7 @@ const Post = ({ post }) => {
       }
     }
   };
-  
+
   const handleClickSingle = (Transition, type) => async (e) => {
     e.preventDefault();
 
@@ -263,7 +266,10 @@ const Post = ({ post }) => {
 
     if (desc !== "") {
       try {
-        await axios.post("https://sinzi.herokuapp.com/api/comments/", newComment);
+        await axios.post(
+          "https://sinzi.herokuapp.com/api/comments/",
+          newComment
+        );
         // socket.current.emit("sendNotification", {
         //   senderId: currentUser.username,
         //   receiverId: user._id,
@@ -521,7 +527,7 @@ const Post = ({ post }) => {
             </div>
             {comments.length <= 3 && (
               <>
-                {comments.map((comment) => (
+                {comments.map((comment, index) => (
                   <Comment
                     key={comment._id}
                     post={post}
@@ -730,9 +736,9 @@ const Post = ({ post }) => {
               </CardContent>
               <CardContent>
                 <>
-                  {comments.map((comment) => (
+                  {comments.map((comment, index) => (
                     <Comment
-                      key={comment._id}
+                      key={index}
                       post={post}
                       comment={comment}
                       newCom={forceUpdate}

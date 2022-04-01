@@ -39,23 +39,21 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
   }, [username, currentUser._id, newCom]);
 
   return (
-    <>
       <Container className={classes.container}>
-        {posts.map((p) => (
-          <>
+        <>
+        {posts.map((p, index) => (
             <Post
-              key={p.img}
+              key={index}
               post={p}
               socket={socket}
               socketUser={socketUser}
             />
+            ))}
             {/* {p === posts.at(0) ? (
               <SuggestedUsers key={currentUser._id} username={username} />
             ) : null} */}
-          </>
-        ))}
+            </>
       </Container>
-    </>
   );
 };
 
