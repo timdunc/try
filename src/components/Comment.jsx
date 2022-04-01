@@ -67,7 +67,6 @@ function Comment({ post, comment, newCom }) {
     } catch (err) {
       console.log(err);
     }
-    newCom();
   };
 
   return (

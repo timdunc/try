@@ -12,6 +12,7 @@ import { Cancel, Mail, Notifications, Search } from "@material-ui/icons";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -92,12 +93,18 @@ const Navbar = () => {
   return (
     <AppBar position="fixed">
       <Toolbar className={classes.toolbar}>
-        <Typography variant="h6" className={classes.logoLg}>
-          Freacky Flex
-        </Typography>
-        <Typography variant="h6" className={classes.logoSm}>
-          Frex
-        </Typography>
+        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+          <Typography
+            variant="h6"
+            className={classes.logoLg}
+            style={{ fontFamily: "Alpha Monday" }}
+          >
+            Freaky Flex
+          </Typography>
+          <Typography variant="h6" className={classes.logoSm} style={{}}>
+            Frex
+          </Typography>
+        </Link>
         <div className={classes.search}>
           <Search />
           <InputBase placeholder="Search..." className={classes.input} />
@@ -114,7 +121,12 @@ const Navbar = () => {
           <Badge badgeContent={2} color="secondary" className={classes.badge}>
             <Notifications />
           </Badge>
-          <Avatar alt={user.username} src={PF + user.profilePicture} />
+          <Link
+            to={`/profile/${user.username}`}
+            style={{ textDecoration: "none" }}
+          >
+            <Avatar alt={user.username} src={PF + user.profilePicture} />
+          </Link>
         </div>
       </Toolbar>
     </AppBar>

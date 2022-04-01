@@ -25,9 +25,21 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  centerFeed: {
+    [theme.breakpoints.down("md")]: {
+      width: "103vw",
+      marginRight: 0,
+      // marginLeft: "-66.5px",
+      // marginBottom: "-71px",
+      // marginBottom: "42px",
+      // overflow: "scroll",
+    },
+  },
   center: {
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
+    [theme.breakpoints.down("md")]: {
+      width: "103.8vw",
+      marginLeft: "-14.5px",
+      // overflow: "scroll",
     },
   },
 }));
@@ -49,7 +61,9 @@ const Home = () => {
           <Leftbar />
         </Grid>
         <Grid item sm={12} xs={12} md={7} lg={7} className={classes.center}>
-          <Feed newCom={newCom} />
+          <div className={classes.centerFeed}>
+            <Feed newCom={newCom} />
+          </div>
         </Grid>
         <Grid item md={3} lg={3} className={classes.right}>
           <Rightbar />
