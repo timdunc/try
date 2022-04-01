@@ -19,9 +19,21 @@ import {
   Share,
 } from "@material-ui/icons";
 import * as React from "react";
+import { useContext } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
+import { format } from "timeago.js";
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+    media: {
+        minHeight: 400,
+        [theme.breakpoints.down("sm")]: {
+          minHeight: 400,
+        },
+    },
+}));
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -34,41 +46,63 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const NewPost = () => {
+const NewPost = ({ post }) => {
   const classes = useStyles();
+
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const [user, setUser] = useState({});
+
+  const { user: currentUser } = useContext(AuthContext);
+
+  const [like, setLike] = useState(post.likes.length);
+
+  const [isLiked, setIsLiked] = useState(false);
+
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(
+        `https://sinzi.herokuapp.com/api/users?userId=${post.userId}`
+      );
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [post.userId]);
+
+  useEffect(() => {
+    setIsLiked(post.likes.includes(currentUser._id));
+  }, [currentUser._id, post.likes]);
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }} style={{ marginBottom: "10px" }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
-          </Avatar>
+          <Avatar sx={{ bgcolor: red[500] }} alt={user.username} src={PF + user.profilePicture} />
         }
         action={
           <IconButton aria-label="settings">
             <MoreVert />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={user.username}
+        subheader={format(post.createdAt)}
       />
       <CardMedia
         component="img"
         height="194"
-        image="/static/images/cards/paella.jpg"
-        alt="Paella dish"
+        image={PF + post.img}
+        alt={post.desc}
+        className={classes.media}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {post.desc}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
