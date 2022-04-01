@@ -32,31 +32,31 @@ const BottomNav = () => {
 
   const history = useHistory();
 
-  useEffect(
-    (e) => {
-      if (value === 0) {
-        e.preventDefault();
-        history.push("/login");
-      }
-      if (value === 1) {
-        e.preventDefault();
-        history.push("/login");
-      }
-      if (value === 2) {
-        e.preventDefault();
-        history.push("/login");
-      }
-      if (value === 3) {
-        e.preventDefault();
-        history.push("/login");
-      }
-      if (value === 4) {
-        e.preventDefault();
-        history.push("/login");
-      }
-    },
-    [value, history]
-  );
+  // useEffect(
+  //   (e) => {
+  //     if (value === 0) {
+  //       e.preventDefault();
+  //       history.push("/login");
+  //     }
+  //     if (value === 1) {
+  //       e.preventDefault();
+  //       history.push("/login");
+  //     }
+  //     if (value === 2) {
+  //       e.preventDefault();
+  //       history.push("/login");
+  //     }
+  //     if (value === 3) {
+  //       e.preventDefault();
+  //       history.push("/login");
+  //     }
+  //     if (value === 4) {
+  //       e.preventDefault();
+  //       history.push("/login");
+  //     }
+  //   },
+  //   [value, history]
+  // );
 
   return (
     <Box

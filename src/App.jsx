@@ -36,7 +36,7 @@ const App = () => {
     <div>
         <Navbar />
         <Grid container className={classes.container}>
-          <Grid item sm={0} xs={0} md={2} lg={2} className={classes.left}>
+          <Grid item md={2} lg={2} className={classes.left}>
             <Leftbar />
           </Grid>
           <Grid
@@ -49,7 +49,7 @@ const App = () => {
           >
             <Feed />
           </Grid>
-          <Grid item sm={0} xs={0} md={3} lg={3} className={classes.right}>
+          <Grid item md={3} lg={3} className={classes.right}>
             <Rightbar />
           </Grid>
         </Grid>
