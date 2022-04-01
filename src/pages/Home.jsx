@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   center: {
     [theme.breakpoints.down("md")]: {
       width: "103.8vw",
-      marginLeft: "-14.5px",
+      marginLeft: "-15px",
       // overflow: "scroll",
     },
   },
