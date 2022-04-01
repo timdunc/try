@@ -33,11 +33,8 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-      <div>
+    <div>
         <Navbar />
-      </div>
-      <div>
         <Grid container className={classes.container}>
           <Grid item sm={0} xs={0} md={2} lg={2} className={classes.left}>
             <Leftbar />
@@ -57,10 +54,7 @@ const App = () => {
           </Grid>
         </Grid>
         <Add />
-      </div>
-      <div>
         <BottomNav />
-      </div>
     </div>
   );
 };

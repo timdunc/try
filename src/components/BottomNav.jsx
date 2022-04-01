@@ -11,15 +11,16 @@ import {
   LocationOn,
   Restore,
 } from "@material-ui/icons";
+import { useEffect } from "react";
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-    BottomNav: {
-        [theme.breakpoints.up("sm")]: {
-            display: "none",
-          },
-    }
+  BottomNav: {
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+  },
 }));
 
 const BottomNav = () => {
@@ -29,7 +30,33 @@ const BottomNav = () => {
 
   const [value, setValue] = useState(0);
 
-  // const navigate = useNavigate();
+  const history = useHistory();
+
+  useEffect(
+    (e) => {
+      if (value === 0) {
+        e.preventDefault();
+        history.push("/login");
+      }
+      if (value === 1) {
+        e.preventDefault();
+        history.push("/login");
+      }
+      if (value === 2) {
+        e.preventDefault();
+        history.push("/login");
+      }
+      if (value === 3) {
+        e.preventDefault();
+        history.push("/login");
+      }
+      if (value === 4) {
+        e.preventDefault();
+        history.push("/login");
+      }
+    },
+    [value, history]
+  );
 
   return (
     <Box

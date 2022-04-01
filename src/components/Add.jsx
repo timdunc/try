@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     bottom: 20,
     right: 20,
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
   container: {
     width: 500,
