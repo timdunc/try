@@ -388,63 +388,7 @@ const NewPost = ({ post }) => {
         </CardContent>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div style={{ display: "flex" }}>
-                <Avatar
-                  alt={currentUser.username}
-                  src={PF + currentUser.profilePicture}
-                  className={classes.contentAvatar}
-                />
-                <form
-                  className={classes.form}
-                  autoComplete="off"
-                  onSubmit={handleClick(TransitionRight, 2)}
-                >
-                  <InputBase
-                    className={classes.commentInput}
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="Leave a comment"
-                    inputProps={{ "aria-label": "Leave a comment" }}
-                    onChange={(e) => setDesc(e.target.value)}
-                    // style={{ width: "50vw" }}
-                  />
-                  <IconButton
-                    type="submit"
-                    sx={{ p: "10px" }}
-                    style={{ marginTop: "-4px" }}
-                    aria-label="send"
-                  >
-                    <div>
-                    <Send
-                      style={{ marginTop: "-4px", transform: "rotate(-45deg)" }}
-                    />
-                    </div>
-                  </IconButton>
-                </form>
-              </div>
-              {comments.length >= 4 && (
-                <div>
-                  <Typography
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: "14px",
-                      cursor: "pointer",
-                    }}
-                    color="secondary"
-                    onClick={() => setOpen(true)}
-                  >
-                    See All
-                  </Typography>
-                </div>
-              )}
-            </div>
-            {/* {comments.length <= 3 && (
+          {comments.length <= 3 && (
               <>
                 {comments.map((comment) => (
                   <Comment
@@ -466,8 +410,8 @@ const NewPost = ({ post }) => {
                     newCom={forceUpdate}
                   />
                 ))}
-                </>
-                )} */}
+              </>
+            )}
           </CardContent>
         </Collapse>
       </Card>
