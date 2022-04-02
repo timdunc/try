@@ -105,12 +105,6 @@ const NewPost = ({ post }) => {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const [expanded, setExpanded] = useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
   const handleBackExpandClick = () => {
     setExpanded(!expanded);
     // setOpen(false);
@@ -121,6 +115,13 @@ const NewPost = ({ post }) => {
   const [desc, setDesc] = useState("");
 
   const [newCom, forceUpdate] = useReducer((x) => x + 1 || x - 1, 0);
+
+  const [expanded, setExpanded] = useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+    forceUpdate();
+  };
 
   useEffect(() => {
     const fetchComment = async () => {
@@ -337,6 +338,7 @@ const NewPost = ({ post }) => {
                   key={comment._id}
                   post={post}
                   comment={comment}
+                  newCom={newCom}
                 />
               ))}
             </>

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewComment = ({ post, comment }) => {
+const NewComment = ({ post, comment, newCom }) => {
   const classes = useStyles();
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -40,8 +40,6 @@ const NewComment = ({ post, comment }) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const { user: currentUser } = useContext(AuthContext);
-
-  const [newCom, forceUpdate] = useReducer((x) => x + 1 || x - 1, 0);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -55,7 +53,7 @@ const NewComment = ({ post, comment }) => {
 
   useEffect(() => {
     setIsLiked(comment.likes.includes(currentUser._id));
-  }, [currentUser._id, comment.likes]);
+  }, [currentUser._id, comment.likes, newCom]);
 
   const likeHandler = () => {
     try {
@@ -70,7 +68,6 @@ const NewComment = ({ post, comment }) => {
     }
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
-    forceUpdate();
   };
 
   return (

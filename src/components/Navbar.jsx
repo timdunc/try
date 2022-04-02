@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
+    backgroundColor: theme.palette.text.primary,
   },
   logoLg: {
     display: "none",
@@ -115,10 +116,10 @@ const Navbar = () => {
             className={classes.searchButton}
             onClick={() => setOpen(true)}
           />
-          <Badge badgeContent={4} color="secondary" className={classes.badge}>
+          <Badge badgeContent={4} color="primary" className={classes.badge}>
             <Mail />
           </Badge>
-          <Badge badgeContent={2} color="secondary" className={classes.badge}>
+          <Badge badgeContent={2} color="primary" className={classes.badge}>
             <Notifications />
           </Badge>
           <Link
