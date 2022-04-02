@@ -2,11 +2,12 @@ import {
   Avatar,
   Checkbox,
   Chip,
+  IconButton,
   makeStyles,
   Paper,
   Typography,
 } from "@material-ui/core";
-import { Favorite, FavoriteBorder } from "@material-ui/icons";
+import { Delete, Edit, Favorite, FavoriteBorder } from "@material-ui/icons";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useReducer } from "react";
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewComment = ({ post, comment, newCom }) => {
+const NewComment = ({ post, comment, newCom, forceUpdate }) => {
   const classes = useStyles();
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -70,6 +71,21 @@ const NewComment = ({ post, comment, newCom }) => {
     setIsLiked(!isLiked);
   };
 
+  const deleteHandler = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.delete(
+        `https://sinzi.herokuapp.com/api/comments/${comment._id}`,
+        {
+          data: { userId: currentUser._id, postId: post._id },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+    forceUpdate();
+  };
+
   return (
     <Paper
       sx={{
@@ -80,6 +96,7 @@ const NewComment = ({ post, comment, newCom }) => {
         p: 0.5,
         m: 0,
       }}
+      style={{ marginBottom: "4px" }}
     >
       <div
         style={{
@@ -147,6 +164,48 @@ const NewComment = ({ post, comment, newCom }) => {
       <Typography className={classes.commentDesc} paragraph>
         {comment.desc}
       </Typography>
+      <div
+        className={classes.commentDesc}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginTop: "-10px",
+        }}
+      >
+        {user._id === currentUser._id ? (
+          <div>
+            <IconButton aria-label="edit">
+              <Edit
+                color="primary"
+                style={{
+                  width: "14px",
+                  height: "14px",
+                }}
+              />
+            </IconButton>
+            <IconButton aria-label="delete" onClick={deleteHandler}>
+              <Delete
+                style={{
+                  width: "14px",
+                  height: "14px",
+                  color: "black",
+                }}
+              />
+            </IconButton>
+          </div>
+        ) : (
+          <div className={classes.commentDesc}></div>
+        )}
+        <Typography
+          variant="caption"
+          display="block"
+          gutterBottom
+          style={{fontWeight: "bold"}}
+        >
+          {format(post.createdAt)}
+        </Typography>
+      </div>
     </Paper>
   );
 };

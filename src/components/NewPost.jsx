@@ -339,6 +339,7 @@ const NewPost = ({ post }) => {
                   post={post}
                   comment={comment}
                   newCom={newCom}
+                  forceUpdate={forceUpdate}
                 />
               ))}
             </>

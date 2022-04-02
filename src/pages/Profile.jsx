@@ -79,14 +79,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-    primary: {
-      main: "#1976d2",
-    },
-  },
-});
+// const darkTheme = createTheme({
+//   palette: {
+//     mode: "dark",
+//     primary: {
+//       main: "#1976d2",
+//     },
+//   },
+// });
 
 const Profile = () => {
   const classes = useStyles();
@@ -108,7 +108,7 @@ const Profile = () => {
   return (
     <>
       <div className={classes.mainContainer}>
-        <ThemeProvider theme={darkTheme}>
+        {/* <ThemeProvider theme={darkTheme}> */}
           <Navbar />
           <Grid container className={classes.container}>
             <Grid item md={2} lg={2} className={classes.left}>
@@ -130,7 +130,7 @@ const Profile = () => {
           </Grid>
           <Add />
           <BottomNav />
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
       </div>
     </>
   );
