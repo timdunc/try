@@ -50,14 +50,14 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
     <Container className={classes.container}>
       <>
         {posts.map((p, index) => (
-          <div key={index}>
+          <div key={p._id}>
             <NewPost
               post={p}
               socket={socket}
               socketUser={socketUser}
             />
             {p === posts.at(0) ? (
-              <SuggestedUsers key={currentUser._id} username={username} />
+              <SuggestedUsers username={username} />
             ) : null}
           </div>
         ))}

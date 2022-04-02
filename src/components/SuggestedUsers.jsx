@@ -275,18 +275,16 @@ const SuggestedUsers = ({ username }) => {
               style={{ display: "flex" }}
             >
               {uniqueFollowings?.map((friend) => (
-                <>
+                <div key={friend}>
                   {currentUser?._id !== friend && (
-                    <>
                       <UserCard
                         key={friend}
                         friend={friend}
                         forceUpdate={forceUpdate}
                         friends={uniqueFollowings}
                       />
-                    </>
                   )}
-                </>
+                </div>
               ))}
             </motion.div>
           </motion.div>
