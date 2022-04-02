@@ -31,7 +31,9 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       const res = username
-        ? await axios.get("https://sinzi.herokuapp.com/api/posts/profile/" + username)
+        ? await axios.get(
+            "https://sinzi.herokuapp.com/api/posts/profile/" + username
+          )
         : await axios.get(
             "https://sinzi.herokuapp.com/api/posts/timeline/" + currentUser._id
           );
@@ -45,21 +47,22 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
   }, [username, currentUser._id, newCom]);
 
   return (
-      <Container className={classes.container}>
-        <>
+    <Container className={classes.container}>
+      <>
         {posts.map((p, index) => (
+          <div key={index}>
             <NewPost
-              key={index}
               post={p}
               socket={socket}
               socketUser={socketUser}
             />
-            ))}
-            {/* {p === posts.at(0) ? (
+            {p === posts.at(0) ? (
               <SuggestedUsers key={currentUser._id} username={username} />
-            ) : null} */}
-            </>
-      </Container>
+            ) : null}
+          </div>
+        ))}
+      </>
+    </Container>
   );
 };
 
