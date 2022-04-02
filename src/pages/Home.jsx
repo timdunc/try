@@ -65,7 +65,6 @@ const Home = () => {
           <Leftbar />
         </Grid>
         <Grid item sm={12} xs={12} md={7} lg={7} className={classes.center}>
-        <Story />
           <div className={classes.centerFeed}>
             <Feed newCom={newCom} />
           </div>
