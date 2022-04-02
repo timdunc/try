@@ -337,7 +337,6 @@ const NewPost = ({ post }) => {
                   key={comment._id}
                   post={post}
                   comment={comment}
-                  forceUpdate={forceUpdate}
                 />
               ))}
             </>
