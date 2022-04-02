@@ -13,12 +13,12 @@ import ProfileRightbar from "../components/ProfileRightbar";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       height: "100%",
     },
   },
   container: {
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       overflow: "scroll",
     },
   },
@@ -29,19 +29,19 @@ const useStyles = makeStyles((theme) => ({
   right: {
     position: "sticky",
     top: 0,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "none",
     },
   },
   centerBar: {
     display: "block",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("sm")]: {
       display: "none",
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "block",
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "103vw",
       // marginLeft: "-67px",
       marginBottom: "-50px",
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
   },
   centerFeed: {
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "103vw",
       marginRight: 0,
       // marginLeft: "-66.5px",
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   center: {
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "103.8vw",
       marginLeft: "-15px",
       // overflow: "scroll",

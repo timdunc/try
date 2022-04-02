@@ -7,6 +7,8 @@ import Leftbar from "../components/Leftbar";
 import Navbar from "../components/Navbar";
 import Rightbar from "../components/Rightbar";
 import { AuthContext } from "../context/AuthContext";
+import Story from "../components/Story";
+import { useContext } from "react";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -26,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   centerFeed: {
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "103vw",
       marginRight: 0,
       // marginLeft: "-66.5px",
@@ -49,6 +51,8 @@ const Home = () => {
 
   const [newCom, forceUpdate] = useReducer((x) => x + 1 || x - 1, 0);
 
+  const { user } = useContext(AuthContext);
+
   return (
     <>
       <Navbar />
@@ -61,12 +65,13 @@ const Home = () => {
           <Leftbar />
         </Grid>
         <Grid item sm={12} xs={12} md={7} lg={7} className={classes.center}>
+        <Story />
           <div className={classes.centerFeed}>
             <Feed newCom={newCom} />
           </div>
         </Grid>
         <Grid item md={3} lg={3} className={classes.right}>
-          <Rightbar />
+          <Rightbar currentUser={user._id} />
         </Grid>
       </Grid>
       <Add />
