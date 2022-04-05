@@ -121,8 +121,6 @@ const NewPost = ({ post }) => {
 
   const [expanded, setExpanded] = useState(false);
 
-  const [lastComments, setLastComments] = useState([]);
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
     forceUpdate();
@@ -173,10 +171,6 @@ const NewPost = ({ post }) => {
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
-
-  useEffect(() => {
-    setLastComments([].concat(comments.at(0), comments.at(1), comments.at(2)));
-  }, [comments]);
 
   return (
     <>
