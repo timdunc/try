@@ -123,6 +123,17 @@ const BottomNav = ({ forceUpdate }) => {
   const handleCloseMessage = () => {
     setOpenMessage(false);
   };
+  
+  const handleHome = () => {
+    history.push("/");
+    setValue(0);
+  };
+
+  const handleCloseAdd = () => {
+    setOpen(false);
+    history.push("/");
+    setValue(0);
+  };
 
   // useEffect(
   //   (e) => {
@@ -164,7 +175,7 @@ const BottomNav = ({ forceUpdate }) => {
             setValue(newValue);
           }}
         >
-          <BottomNavigationAction label="Home" icon={<Home />} />
+          <BottomNavigationAction label="Home" icon={<Home />} onClick={handleHome} />
           <BottomNavigationAction label="Recents" icon={<Restore />} />
           <BottomNavigationAction
             label="Add"
@@ -262,7 +273,7 @@ const BottomNav = ({ forceUpdate }) => {
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => setOpen(false)}
+                onClick={handleCloseAdd}
               >
                 Cancel
               </Button>
