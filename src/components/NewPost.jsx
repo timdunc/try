@@ -340,7 +340,7 @@ const NewPost = ({ post }) => {
         </CardContent>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <div
+            {/* <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -376,9 +376,9 @@ const NewPost = ({ post }) => {
                     <Send />
                   </IconButton>
                 </Box>
-              </div>
-              {comments.length >= 4 && (
-                <div>
+              </div> */}
+              <div>
+                {comments.length >= 4 && (
                   <Typography
                     style={{
                       fontWeight: "bold",
@@ -391,9 +391,9 @@ const NewPost = ({ post }) => {
                   >
                     See All
                   </Typography>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            {/* </div> */}
             <div style={{ marginBottom: "-10px" }}>
               {/* {comments.map((comment) => (
                 <NewComment
@@ -417,7 +417,7 @@ const NewPost = ({ post }) => {
                   ))}
                 </>
               )}
-              {/* {comments.length >= 4 && (
+              {comments.length >= 4 && (
                 <>
                   {lastComments.map((comment) => (
                     <NewComment
@@ -429,7 +429,7 @@ const NewPost = ({ post }) => {
                     />
                   ))}
                 </>
-              )} */}
+              )}
             </div>
           </CardContent>
         </Collapse>
