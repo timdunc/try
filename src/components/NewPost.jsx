@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Card,
   CardActions,
   CardContent,
@@ -11,6 +12,7 @@ import {
   Link,
   makeStyles,
   styled,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
@@ -20,6 +22,7 @@ import {
   FavoriteBorder,
   MoreVert,
   MoreVertRounded,
+  Send,
   Share,
   ShareRounded,
 } from "@material-ui/icons";
@@ -168,6 +171,12 @@ const NewPost = ({ post }) => {
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
+
+  const lastComments = [].concat(
+    comments.at(0),
+    comments.at(1),
+    comments.at(2)
+  );
 
   return (
     <>
@@ -331,9 +340,62 @@ const NewPost = ({ post }) => {
         </CardContent>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>Method:</Typography>
-            <>
-              {comments.map((comment) => (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "5px",
+                marginTop: "-20px",
+              }}
+            >
+              <div>
+                <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                  <Avatar
+                    alt={currentUser.username}
+                    src={PF + currentUser.profilePicture}
+                    style={{
+                      width: "34px",
+                      height: "34px",
+                      marginRight: "5px",
+                    }}
+                  />
+                  <TextField
+                    id="input-with-sx"
+                    label="Leave a comment"
+                    variant="standard"
+                  />
+                  <IconButton
+                    color="primary"
+                    aria-label="Leave comment"
+                    component="span"
+                    style={{
+                      marginTop: "10px",
+                    }}
+                  >
+                    <Send />
+                  </IconButton>
+                </Box>
+              </div>
+              {comments.length >= 4 && (
+                <div>
+                  <Typography
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: "14px",
+                      cursor: "pointer",
+                      marginTop: "10px",
+                    }}
+                    color="secondary"
+                    // onClick={() => setOpen(true)}
+                  >
+                    See All
+                  </Typography>
+                </div>
+              )}
+            </div>
+            <div style={{ marginBottom: "-10px" }}>
+              {/* {comments.map((comment) => (
                 <NewComment
                   key={comment._id}
                   post={post}
@@ -341,8 +403,34 @@ const NewPost = ({ post }) => {
                   newCom={newCom}
                   forceUpdate={forceUpdate}
                 />
-              ))}
-            </>
+              ))} */}
+              {comments.length <= 3 && (
+                <>
+                  {comments.map((comment) => (
+                    <NewComment
+                      key={comment._id}
+                      post={post}
+                      comment={comment}
+                      newCom={newCom}
+                      forceUpdate={forceUpdate}
+                    />
+                  ))}
+                </>
+              )}
+              {comments.length >= 4 && (
+                <>
+                  {lastComments.map((comment) => (
+                    <NewComment
+                      key={comment._id}
+                      post={post}
+                      comment={comment}
+                      newCom={newCom}
+                      forceUpdate={forceUpdate}
+                    />
+                  ))}
+                </>
+              )}
+            </div>
           </CardContent>
         </Collapse>
       </Card>
