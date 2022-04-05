@@ -74,7 +74,7 @@ const Home = () => {
         </Grid>
       </Grid>
       <Add />
-      <BottomNav />
+      <BottomNav forceUpdate={forceUpdate} />
     </>
   );
 };

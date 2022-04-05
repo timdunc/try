@@ -39,8 +39,10 @@ import NewComment from "./NewComment";
 const useStyles = makeStyles((theme) => ({
   media: {
     minHeight: 400,
+    objectFit: "contain",
     [theme.breakpoints.down("md")]: {
-      minHeight: 450,
+      objectFit: "cover",
+      minHeight: 400,
     },
   },
   userInfo: {
