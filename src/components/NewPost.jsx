@@ -404,7 +404,7 @@ const NewPost = ({ post }) => {
                   forceUpdate={forceUpdate}
                 />
               ))} */}
-              {comments.length <= 3 && (
+              {comments.length <= 3 ? (
                 <>
                   {comments.map((comment) => (
                     <NewComment
@@ -416,18 +416,17 @@ const NewPost = ({ post }) => {
                     />
                   ))}
                 </>
-              )}
-              {comments.length >= 4 && (
+              ): (
                 <>
-                  {lastComments.map((comment) => (
-                    <NewComment
-                      key={comment._id}
-                      post={post}
-                      comment={comment}
-                      newCom={newCom}
-                      forceUpdate={forceUpdate}
-                    />
-                  ))}
+                {lastComments.map((comment) => (
+                  <NewComment
+                    key={comment._id}
+                    post={post}
+                    comment={comment}
+                    newCom={newCom}
+                    forceUpdate={forceUpdate}
+                  />
+                ))}
                 </>
               )}
             </div>
