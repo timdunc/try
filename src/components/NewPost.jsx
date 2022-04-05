@@ -172,12 +172,6 @@ const NewPost = ({ post }) => {
     setIsLiked(post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
 
-  const lastComments = [].concat(
-    comments.at(0),
-    comments.at(1),
-    comments.at(2)
-  );
-
   return (
     <>
       <Card sx={{ maxWidth: 345 }} style={{ marginBottom: "10px" }}>
