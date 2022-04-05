@@ -410,7 +410,7 @@ const NewPost = ({ post }) => {
                 />
               ))} */}
               {comments.length <= 3 ? (
-                <>
+                <div>
                   {comments.map((comment) => (
                     <NewComment
                       key={comment._id}
@@ -420,9 +420,9 @@ const NewPost = ({ post }) => {
                       forceUpdate={forceUpdate}
                     />
                   ))}
-                </>
+                </div>
               ): (
-                <>
+                <div>
                 {lastComments.map((comment) => (
                   <NewComment
                     key={comment._id}
@@ -432,7 +432,7 @@ const NewPost = ({ post }) => {
                     forceUpdate={forceUpdate}
                   />
                 ))}
-                </>
+                </div>
               )}
             </div>
           </CardContent>
