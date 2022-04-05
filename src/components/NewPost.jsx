@@ -417,7 +417,7 @@ const NewPost = ({ post }) => {
                   ))}
                 </>
               )}
-              {comments.length >= 4 && (
+              {/* {comments.length >= 4 && (
                 <>
                   {lastComments.map((comment) => (
                     <NewComment
@@ -429,7 +429,7 @@ const NewPost = ({ post }) => {
                     />
                   ))}
                 </>
-              )}
+              )} */}
             </div>
           </CardContent>
         </Collapse>
