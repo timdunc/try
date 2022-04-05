@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "block",
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       width: "103vw",
       // marginLeft: "-67px",
       marginBottom: "-50px",
