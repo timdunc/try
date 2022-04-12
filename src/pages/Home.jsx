@@ -15,6 +15,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100vw",
       padding: 0,
+      overflowX: "hidden",
+      overflowY: "hidden",
     },
   },
   right: {

@@ -38,11 +38,13 @@ import NewComment from "./NewComment";
 
 const useStyles = makeStyles((theme) => ({
   media: {
-    minHeight: 400,
-    objectFit: "contain",
+    // minHeight: 400,
+    // objectFit: "contain",
     [theme.breakpoints.down("md")]: {
-      objectFit: "cover",
-      minHeight: 400,
+    //   objectFit: "cover",
+    //   minHeight: 400,
+    maxHeight: "600px", 
+    objectFit: "cover",
     },
   },
   userInfo: {
@@ -214,12 +216,13 @@ const NewPost = ({ post }) => {
         </div>
         <CardMedia
           component="img"
-          height="194"
+          // height="194"
           image={PF + post.img}
           alt={post.desc}
           className={classes.media}
+          style={{ marginBottom: "-5px"}}
         />
-        <CardActions className={classes.cardActions}>
+        <CardActions className={classes.cardActions} style={{height: "30px"}}>
           <CardActions>
             {isLiked && (
               <Checkbox
@@ -267,7 +270,7 @@ const NewPost = ({ post }) => {
             </IconButton>
           </CardActions>
         </CardActions>
-        <CardContent className={classes.cardContent}>
+        <CardContent className={classes.cardContent} style={{height: "40px"}}>
           <div
             style={{
               display: "flex",
