@@ -174,18 +174,16 @@ const SingleUserCard = ({ followings, forceUpdate }) => {
                           display: "flex",
                           flexDirection: "row",
                           justifyContent: "space-between",
+                          alignItems: "center",
                           width: "100%",
                         }}
                       >
-                        <div>
                           <Typography
                             size="small"
                             style={{ fontWeight: "bold", marginTop: "2px" }}
                           >
                             {user.username}
                           </Typography>
-                        </div>
-                        <div style={{ marginBottom: "0px" }}>
                           {currentUser !== user._id && followed ? (
                             <Button
                               variant="contained"
@@ -205,7 +203,6 @@ const SingleUserCard = ({ followings, forceUpdate }) => {
                               FOLLOW
                             </Button>
                           )}
-                        </div>
                       </div>
                     </CardActions>
                   </CardActionArea>

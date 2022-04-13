@@ -162,7 +162,7 @@ const SuggestedUsers = ({ username }) => {
 
   const uniqueFollowings = [
     ...allFriends?.filter((value, index) => {
-        return allFriends?.indexOf(value) === index;
+      return allFriends?.indexOf(value) === index;
     }),
   ];
 
@@ -219,29 +219,26 @@ const SuggestedUsers = ({ username }) => {
   return (
     <>
       <div
-        style={{ fontWeight: "bold", marginBottom: "10px", marginTop: "-10px",marginLeft: "10px", marginRight: "10px" }}
+        style={{
+          fontWeight: "bold",
+          marginBottom: "10px",
+          marginTop: "-10px",
+          marginLeft: "10px",
+          marginRight: "10px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <div>
-            <Typography style={{ fontWeight: "bold" }}>
-              Suggested for You
-            </Typography>
-          </div>
-          <div>
-            <Typography
-              style={{ fontWeight: "bold", fontSize: "16px" }}
-              color="secondary"
-            >
-              View All
-            </Typography>
-          </div>
-        </div>
+          <Typography style={{ fontWeight: "bold" }}>
+            Suggested for You
+          </Typography>
+          <Typography
+            style={{ fontWeight: "bold", fontSize: "16px" }}
+            color="secondary"
+          >
+            View All
+          </Typography>
       </div>
       <motion.div className={classes.mainContainer}>
         <motion.div
@@ -262,12 +259,12 @@ const SuggestedUsers = ({ username }) => {
             >
               {uniqueFollowings?.map((friend) => (
                 <React.Fragment key={friend}>
-                      <UserCard
-                        key={friend}
-                        friend={friend}
-                        forceUpdate={forceUpdate}
-                        friends={uniqueFollowings}
-                      />
+                  <UserCard
+                    key={friend}
+                    friend={friend}
+                    forceUpdate={forceUpdate}
+                    friends={uniqueFollowings}
+                  />
                 </React.Fragment>
               ))}
             </motion.div>
