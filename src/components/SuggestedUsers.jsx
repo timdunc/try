@@ -198,12 +198,6 @@ const SuggestedUsers = ({ username }) => {
     getFriends();
   }, [currentUser._id]);
 
-  // console.log(user)
-
-  useEffect(() => {
-    setFollowed(currentUser?.followings?.includes(user?._id));
-  }, [currentUser, user._id]);
-
   useEffect(() => {
     setFollowings(user?.followings);
   }, [user.followings]);
@@ -211,14 +205,6 @@ const SuggestedUsers = ({ username }) => {
   useEffect(() => {
     setFollowers(user?.followers);
   }, [user.followers]);
-
-  // useEffect(() => {
-  //   friends?.map((f) => setNewFollowings(f.followings));
-  // }, [friends]);
-
-  // const allFollowing = [].concat(followings);
-
-  // console.log(newFollowings);
 
   useEffect(() => {
     setWidth(
@@ -275,16 +261,14 @@ const SuggestedUsers = ({ username }) => {
               style={{ display: "flex" }}
             >
               {uniqueFollowings?.map((friend) => (
-                <div key={friend}>
-                  {currentUser?._id !== friend && (
+                <React.Fragment key={friend}>
                       <UserCard
                         key={friend}
                         friend={friend}
                         forceUpdate={forceUpdate}
                         friends={uniqueFollowings}
                       />
-                  )}
-                </div>
+                </React.Fragment>
               ))}
             </motion.div>
           </motion.div>

@@ -124,7 +124,8 @@ const BottomNav = ({ forceUpdate }) => {
     setOpenMessage(false);
   };
   
-  const handleHome = () => {
+  const handleHome = (e) => {
+    e.preventDefault();
     history.push("/");
     setValue(0);
   };
