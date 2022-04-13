@@ -11,6 +11,7 @@ import { Delete, Edit, Favorite, FavoriteBorder } from "@material-ui/icons";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useReducer } from "react";
+import { useHistory } from "react-router-dom";
 import { format } from "timeago.js";
 import { AuthContext } from "../context/AuthContext";
 
@@ -86,6 +87,12 @@ const NewComment = ({ post, comment, newCom, forceUpdate }) => {
     forceUpdate();
   };
 
+  const history = useHistory();
+
+  const handleProf = () => {
+    history.push(`/profile/${user.username}`);
+  };
+
   return (
     <Paper
       sx={{
@@ -110,6 +117,7 @@ const NewComment = ({ post, comment, newCom, forceUpdate }) => {
           label={user.username}
           variant="outlined"
           className={classes.userName}
+          onClick={handleProf}
         />
         <div
           className={classes.commentDesc1}

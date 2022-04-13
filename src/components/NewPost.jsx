@@ -35,6 +35,7 @@ import axios from "axios";
 import { format } from "timeago.js";
 import { useReducer } from "react";
 import NewComment from "./NewComment";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -176,6 +177,12 @@ const NewPost = ({ post }) => {
     setIsLiked(post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
 
+  const history = useHistory();
+
+  const handleProf = () => {
+    history.push(`/profile/${user.username}`);
+  };
+
   return (
     <>
       <Card sx={{ maxWidth: 345 }} style={{ marginBottom: "10px" }}>
@@ -196,10 +203,9 @@ const NewPost = ({ post }) => {
           >
             <CardHeader
               avatar={
-                <Link to={`/profile/${user.username}`}>
                   <Avatar alt="" src={PF + user.profilePicture} />
-                </Link>
               }
+              onClick={handleProf}
             />
             <div style={{ marginLeft: "-28px" }}>
               <Typography style={{ fontWeight: "bold" }}>
