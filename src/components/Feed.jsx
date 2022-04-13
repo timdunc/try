@@ -56,9 +56,9 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
               socket={socket}
               socketUser={socketUser}
             />
-            {p === posts.at(0) ? (
+            {/* {p === posts.at(0) ? (
               <SuggestedUsers username={username} />
-            ) : null}
+            ) : null} */}
           </React.Fragment>
         ))}
       </>

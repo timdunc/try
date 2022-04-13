@@ -93,7 +93,6 @@ const SingleUserCard = ({ followings, forceUpdate }) => {
         `https://sinzi.herokuapp.com/api/users?userId=${followings}`
       );
       setUser(res.data);
-      forceUpdate();
     };
     fetchUser();
   }, [followings, forceUpdate]);
@@ -131,8 +130,6 @@ const SingleUserCard = ({ followings, forceUpdate }) => {
   const handleCloseMessage = () => {
     setOpenMessage(false);
   };
-
-  console.log(followings)
 
   return (
     <>
