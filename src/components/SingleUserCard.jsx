@@ -132,7 +132,7 @@ const SingleUserCard = ({ followings, forceUpdate }) => {
     setOpenMessage(false);
   };
 
-  // console.log(user);
+  console.log(followings)
 
   return (
     <>
