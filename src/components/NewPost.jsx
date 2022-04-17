@@ -8,15 +8,21 @@ import {
   CardMedia,
   Checkbox,
   Collapse,
+  Container,
   IconButton,
+  InputBase,
   Link,
   makeStyles,
+  Modal,
+  Slide,
+  Snackbar,
   styled,
   TextField,
   Typography,
 } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import {
+  ArrowBackIosRounded,
   ExpandMoreRounded,
   Favorite,
   FavoriteBorder,
@@ -38,14 +44,22 @@ import NewComment from "./NewComment";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      paddingRight: 0,
+      paddingLeft: 0,
+      height: "100vh",
+    },
+  },
   media: {
     // minHeight: 400,
     // objectFit: "contain",
     [theme.breakpoints.down("md")]: {
-    //   objectFit: "cover",
-    //   minHeight: 400,
-    maxHeight: "600px", 
-    objectFit: "cover",
+      //   objectFit: "cover",
+      //   minHeight: 400,
+      maxHeight: "600px",
+      objectFit: "cover",
     },
   },
   userInfo: {
@@ -100,8 +114,18 @@ const Expand = styled((props) => {
   }),
 }));
 
+function TransitionRight(props) {
+  return <Slide {...props} direction="right" />;
+}
+
 const NewPost = ({ post }) => {
   const classes = useStyles();
+
+  const [open, setOpen] = useState(false);
+
+  const [openMessage, setOpenMessage] = React.useState(false);
+
+  const [transition, setTransition] = React.useState(undefined);
 
   const [user, setUser] = useState({});
 
@@ -112,11 +136,6 @@ const NewPost = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  const handleBackExpandClick = () => {
-    setExpanded(!expanded);
-    // setOpen(false);
-  };
 
   const [comments, setComments] = useState([]);
 
@@ -129,6 +148,10 @@ const NewPost = ({ post }) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
     forceUpdate();
+  };
+
+  const handleBackExpandClick = () => {
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -183,6 +206,40 @@ const NewPost = ({ post }) => {
     history.push(`/profile/${user.username}`);
   };
 
+  const handleClickSingle = (Transition, type) => async (e) => {
+    e.preventDefault();
+
+    const newComment = {
+      userId: currentUser._id,
+      postId: post._id,
+      desc: desc,
+    };
+
+    if (desc !== "") {
+      try {
+        await axios.post(
+          "https://sinzi.herokuapp.com/api/comments/",
+          newComment
+        );
+        // socket.current.emit("sendNotification", {
+        //   senderId: currentUser.username,
+        //   receiverId: user._id,
+        //   type,
+        // });
+        forceUpdate();
+        setTransition(() => Transition);
+        setOpenMessage(true);
+        setDesc("");
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const handleCloseMessage = () => {
+    setOpenMessage(false);
+  };
+
   return (
     <>
       <Card sx={{ maxWidth: 345 }} style={{ marginBottom: "10px" }}>
@@ -202,9 +259,7 @@ const NewPost = ({ post }) => {
             }}
           >
             <CardHeader
-              avatar={
-                  <Avatar alt="" src={PF + user.profilePicture} />
-              }
+              avatar={<Avatar alt="" src={PF + user.profilePicture} />}
               onClick={handleProf}
             />
             <div style={{ marginLeft: "-28px" }}>
@@ -226,9 +281,10 @@ const NewPost = ({ post }) => {
           image={PF + post.img}
           alt={post.desc}
           className={classes.media}
-          style={{ marginBottom: "-5px"}}
+          style={{ marginBottom: "-5px" }}
+          onClick={() => setOpen(true)}
         />
-        <CardActions className={classes.cardActions} style={{height: "30px"}}>
+        <CardActions className={classes.cardActions} style={{ height: "30px" }}>
           <CardActions>
             {isLiked && (
               <Checkbox
@@ -276,7 +332,7 @@ const NewPost = ({ post }) => {
             </IconButton>
           </CardActions>
         </CardActions>
-        <CardContent className={classes.cardContent} style={{height: "40px"}}>
+        <CardContent className={classes.cardContent} style={{ height: "40px" }}>
           <div
             style={{
               display: "flex",
@@ -356,6 +412,255 @@ const NewPost = ({ post }) => {
           </CardContent>
         </Collapse>
       </Card>
+      <Modal open={open} style={{ overflow: "scroll" }}>
+        <div style={{ position: "relative" }}>
+          <Container
+            className={classes.container}
+            style={{ backgroundColor: "white" }}
+          >
+            <Card className={classes.cardModal}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginTop: "-12px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <IconButton onClick={handleBackExpandClick} aria-label="Back">
+                    <ArrowBackIosRounded
+                      style={{
+                        // marginRight: "-20px",
+                        marginLeft: "0px",
+                        fontWeight: "bold",
+                      }}
+                    />
+                  </IconButton>
+                  <CardHeader
+                    avatar={
+                      <Link to={`/profile/${user.username}`}>
+                        <Avatar alt="" src={PF + user.profilePicture} />
+                      </Link>
+                    }
+                  />
+                  <div style={{ marginLeft: "-28px" }}>
+                    <Typography style={{ fontWeight: "bold" }}>
+                      {user.username}
+                    </Typography>
+                    <Typography className={classes.userInfo}>
+                      {format(post.createdAt)}
+                    </Typography>
+                  </div>
+                </div>
+                <IconButton aria-label="settings">
+                  <MoreVert />
+                </IconButton>
+              </div>
+              {post.img && (
+                <>
+                  <CardMedia
+                    component="img"
+                    // height="194"
+                    image={PF + post.img}
+                    alt={post.desc}
+                    className={classes.media}
+                    style={{ marginBottom: "-5px", marginTop: "-10px" }}
+                    onClick={() => setOpen(true)}
+                  />
+                </>
+              )}
+              <CardActions className={classes.cardActions}>
+                <CardActions>
+                  {isLiked && (
+                    <Checkbox
+                      icon={<Favorite style={{ color: "#b71c1c" }} />}
+                      onClick={likeHandler}
+                    />
+                  )}
+                  {!isLiked && (
+                    <Checkbox
+                      icon={<FavoriteBorder />}
+                      onClick={() => likeHandler(1)}
+                    />
+                  )}
+                  {like > 0 && like === 1 && (
+                    <Typography
+                      variant="body1"
+                      color="secondary"
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "14px",
+                        color: "#c62828",
+                      }}
+                    >
+                      {" "}
+                      {like} Like
+                    </Typography>
+                  )}
+                  {like > 1 && (
+                    <Typography
+                      variant="body1"
+                      color="secondary"
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "14px",
+                        color: "#c62828",
+                      }}
+                    >
+                      {" "}
+                      {like} Likes
+                    </Typography>
+                  )}
+
+                  <IconButton aria-label="share">
+                    <Share />
+                  </IconButton>
+                </CardActions>
+              </CardActions>
+              <CardContent className={classes.cardContent}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className={classes.cardContentElement}>
+                    <Typography
+                      variant="body2"
+                      className={classes.contentNameTypo}
+                    >
+                      {user.username}{" "}
+                      <span style={{ fontWeight: "lighter", fontSize: "14px" }}>
+                        {post.desc}
+                      </span>
+                    </Typography>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div style={{ marginLeft: "10px" }}>
+                      {comments.length === 0 && (
+                        <Typography
+                          style={{ fontWeight: "bold", fontSize: "14px" }}
+                        >
+                          No Comments yet
+                        </Typography>
+                      )}
+                      {comments.length === 1 && (
+                        <Typography
+                          style={{ fontWeight: "bold", fontSize: "14px" }}
+                        >
+                          {comments.length} Comment
+                        </Typography>
+                      )}
+                      {comments.length > 1 && (
+                        <Typography
+                          style={{ fontWeight: "bold", fontSize: "14px" }}
+                        >
+                          All {comments.length} Comments
+                        </Typography>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <CardActions className={classes.cardActionsComment}>
+                  <CardActions></CardActions>
+                </CardActions>
+              </CardContent>
+              <CardContent style={{marginBottom: "25px"}}>
+                <>
+                  {comments.map((comment) => (
+                    <NewComment
+                      key={comment._id}
+                      post={post}
+                      comment={comment}
+                      newCom={forceUpdate}
+                    />
+                  ))}
+                </>
+              </CardContent>
+            </Card>
+            <div
+              style={{
+                position: "fixed",
+                left: 0,
+                bottom: 0,
+                backgroundColor: "white",
+                width: "100%",
+              }}
+            >
+              <form
+                className={classes.form}
+                autoComplete="off"
+                onSubmit={handleClickSingle(TransitionRight, 2)}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    // width: "100%",
+                    padding: "0 10px",
+                    // flex: 1,
+                    flexDirection: "row",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      // outline: "2px solid grey",
+                    }}
+                  >
+                    <Avatar
+                      alt={currentUser.username}
+                      src={PF + currentUser.profilePicture}
+                      className={classes.contentAvatar}
+                    />
+                    <InputBase
+                      className={classes.commentInput}
+                      sx={{ ml: 1, flex: 1 }}
+                      placeholder="Leave a comment"
+                      inputProps={{ "aria-label": "Leave a comment" }}
+                      onChange={(e) => setDesc(e.target.value)}
+                      style={{}}
+                    />
+                  </div>
+                  <div>
+                    <IconButton type="submit" aria-label="send">
+                      <Send
+                        style={{
+                          transform: "rotate(-45deg)",
+                        }}
+                      />
+                    </IconButton>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </Container>
+        </div>
+      </Modal>
+      <Snackbar
+        open={openMessage}
+        onClose={handleCloseMessage}
+        autoHideDuration={2000}
+        TransitionComponent={transition}
+        message="Comment added"
+        key={transition ? transition.name : ""}
+      />
     </>
   );
 };
