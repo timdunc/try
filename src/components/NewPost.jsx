@@ -242,7 +242,7 @@ const NewPost = ({ post }) => {
 
   return (
     <>
-      <Card sx={{  }} style={{ marginBottom: "10px", marginLeft: "9px", width: "100vw"}}>
+      <Card sx={{  }} style={{ marginBottom: "10px", marginLeft: "8.5px", width: "100vw"}}>
         <div
           style={{
             display: "flex",
