@@ -54,7 +54,8 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
           <React.Fragment key={p._id}>
             <NewPost post={p} socket={socket} socketUser={socketUser} />
             {p === posts.at(0) ? (
-              <NewSuggestedUsers username={username} />
+              // <NewSuggestedUsers username={username} />
+              <p>Hello There</p>
             ) : null}
           </React.Fragment>
         ))}
