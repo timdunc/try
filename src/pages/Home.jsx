@@ -30,9 +30,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   centerFeed: {
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       width: "103vw",
       marginRight: 0,
+      marginTop: "5px",
       // marginLeft: "-66.5px",
       // marginBottom: "-71px",
       // marginBottom: "42px",
