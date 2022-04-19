@@ -118,7 +118,7 @@ function TransitionRight(props) {
   return <Slide {...props} direction="right" />;
 }
 
-const NewPost = ({ post }) => {
+const NewPost = ({ post, newCom, forceUpdate}) => {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -140,8 +140,6 @@ const NewPost = ({ post }) => {
   const [comments, setComments] = useState([]);
 
   const [desc, setDesc] = useState("");
-
-  const [newCom, forceUpdate] = useReducer((x) => x + 1 || x - 1, 0);
 
   const [expanded, setExpanded] = useState(false);
 
@@ -585,7 +583,8 @@ const NewPost = ({ post }) => {
                       key={comment._id}
                       post={post}
                       comment={comment}
-                      newCom={forceUpdate}
+                      newCom={newCom}
+                      forceUpdate={forceUpdate}
                     />
                   ))}
                 </>
