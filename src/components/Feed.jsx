@@ -1,7 +1,7 @@
 import { Container, makeStyles } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import NewPost from "./NewPost";
-import SuggestedUsers from "./SuggestedUsers";
+import NewSuggestedUsers from "./NewSuggestedUsers";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
@@ -48,22 +48,18 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
   }, [username, currentUser._id, newCom]);
 
   return (
-    <Container className={classes.container}>
-      <>
+    <>
+      <Container className={classes.container}>
         {posts.map((p, index) => (
           <React.Fragment key={p._id}>
-            <NewPost
-              post={p}
-              socket={socket}
-              socketUser={socketUser}
-            />
-            {/* {p === posts.at(0) ? (
-              <SuggestedUsers username={username} />
-            ) : null} */}
+            <NewPost post={p} socket={socket} socketUser={socketUser} />
+            {p === posts.at(0) ? (
+              <NewSuggestedUsers username={username} />
+            ) : null}
           </React.Fragment>
         ))}
-      </>
-    </Container>
+      </Container>
+    </>
   );
 };
 

@@ -1,8 +1,6 @@
-import {
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 import axios from "axios";
+import { motion } from "framer-motion";
 import React, {
   useContext,
   useEffect,
@@ -10,22 +8,7 @@ import React, {
   useRef,
   useReducer,
 } from "react";
-import { useParams } from "react-router";
 import { AuthContext } from "../context/AuthContext";
-import { motion } from "framer-motion";
-import { styled } from "@material-ui/styles";
-import { Link } from "react-router-dom";
-import { Cancel, PhotoCamera } from "@material-ui/icons";
-import FriendStory from "./FriendStory";
-import UserCard from "./UserCard";
-import MobileStepper from "@material-ui/core/MobileStepper";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import { useTheme } from "@material-ui/styles";
-import SwipeableViews from "react-swipeable-views";
-import { autoPlay } from "react-swipeable-views-utils";
-
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -109,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SuggestedUsers = ({ username }) => {
+const NewSuggestedUsers = () => {
   const classes = useStyles();
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -119,15 +102,6 @@ const SuggestedUsers = ({ username }) => {
   const [user, setUser] = useState({});
 
   const [friends, setFriends] = useState([]);
-
-  const [followed, setFollowed] = useState(
-    currentUser?.followings.includes(user?._id)
-  );
-  const [followers, setFollowers] = useState(user?.followers);
-
-  const [followings, setFollowings] = useState(user.followings?.length);
-
-  const [following, setFollowing] = useState({});
 
   const othersContainer = useRef();
 
@@ -154,47 +128,6 @@ const SuggestedUsers = ({ username }) => {
       return allFriends?.indexOf(value) === index;
     }),
   ];
-
-  // console.log(uniqueFollowings);
-
-  // const [newFollowings, setNewFollowings] = useState([]);
-
-  // console.log(friendsFollowings)
-
-  // console.log(width)
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const res = await axios.get(
-        `https://sinzi.herokuapp.com/api/users?username=${currentUser.username}`
-      );
-      setUser(res.data);
-    };
-    fetchUser();
-  }, [currentUser.username]);
-
-  useEffect(() => {
-    const getFriends = async () => {
-      try {
-        const friendList = await axios.get(
-          "https://sinzi.herokuapp.com/api/users/friends/" + currentUser._id
-        );
-        setFriends(friendList.data);
-      } catch (err) {
-        console.log("");
-      }
-    };
-    getFriends();
-  }, [currentUser._id]);
-
-  useEffect(() => {
-    setFollowings(user?.followings);
-  }, [user.followings]);
-
-  useEffect(() => {
-    setFollowers(user?.followers);
-  }, [user.followers]);
-
   useEffect(() => {
     setWidth(
       othersContainer.current.scrollWidth -
@@ -203,8 +136,6 @@ const SuggestedUsers = ({ username }) => {
     );
   }, [othersContainer, newWid, width]);
 
-  // console.log(unique)
-
   return (
     <>
       <div
@@ -212,22 +143,23 @@ const SuggestedUsers = ({ username }) => {
           fontWeight: "bold",
           marginBottom: "10px",
           marginTop: "-10px",
-          marginLeft: "10px",
-          marginRight: "10px",
+          
+          
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          width: "100%",
         }}
       >
-          <Typography style={{ fontWeight: "bold" }}>
-            Suggested for You
-          </Typography>
-          <Typography
-            style={{ fontWeight: "bold", fontSize: "16px" }}
-            color="secondary"
-          >
-            View All
-          </Typography>
+        <Typography style={{ fontWeight: "bold", marginLeft: "25px", }}>
+          Suggested for You
+        </Typography>
+        <Typography
+          style={{ fontWeight: "bold", fontSize: "16px", marginRight: "10px", }}
+          color="secondary"
+        >
+          View All
+        </Typography>
       </div>
       <motion.div className={classes.mainContainer}>
         <motion.div
@@ -248,12 +180,12 @@ const SuggestedUsers = ({ username }) => {
             >
               {uniqueFollowings?.map((friend) => (
                 <React.Fragment key={friend}>
-                  <UserCard
-                    key={friend}
-                    friend={friend}
-                    forceUpdate={forceUpdate}
-                    friends={uniqueFollowings}
-                  />
+                  {/* <UserCard
+                  key={friend}
+                  friend={friend}
+                  forceUpdate={forceUpdate}
+                  friends={uniqueFollowings}
+                /> */}
                 </React.Fragment>
               ))}
             </motion.div>
@@ -264,4 +196,4 @@ const SuggestedUsers = ({ username }) => {
   );
 };
 
-export default SuggestedUsers;
+export default NewSuggestedUsers;
