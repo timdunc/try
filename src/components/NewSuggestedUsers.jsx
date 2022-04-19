@@ -109,25 +109,25 @@ const NewSuggestedUsers = () => {
 
   const [newWid, forceUpdate] = useReducer((x) => x + 1 || x - 1, 0);
 
-  const test = friends?.map((f) => f.followings);
+//   const test = friends?.map((f) => f.followings);
 
-  const allFollowingz = [].concat(...test);
+//   const allFollowingz = [].concat(...test);
 
-  const unique = [
-    ...allFollowingz?.filter((value, index) => {
-      return allFollowingz?.indexOf(value) === index;
-    }),
-  ];
+//   const unique = [
+//     ...allFollowingz?.filter((value, index) => {
+//       return allFollowingz?.indexOf(value) === index;
+//     }),
+//   ];
 
-  const newFriends = friends.map((f) => f._id);
+//   const newFriends = friends.map((f) => f._id);
 
-  const allFriends = [].concat(...unique, ...newFriends);
+//   const allFriends = [].concat(...unique, ...newFriends);
 
-  const uniqueFollowings = [
-    ...allFriends?.filter((value, index) => {
-      return allFriends?.indexOf(value) === index;
-    }),
-  ];
+//   const uniqueFollowings = [
+//     ...allFriends?.filter((value, index) => {
+//       return allFriends?.indexOf(value) === index;
+//     }),
+//   ];
   useEffect(() => {
     setWidth(
       othersContainer.current.scrollWidth -
@@ -143,8 +143,6 @@ const NewSuggestedUsers = () => {
           fontWeight: "bold",
           marginBottom: "10px",
           marginTop: "-10px",
-          
-          
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -178,16 +176,16 @@ const NewSuggestedUsers = () => {
               className={classes.othersPost}
               style={{ display: "flex" }}
             >
-              {uniqueFollowings?.map((friend) => (
-                <React.Fragment key={friend}>
+              {/* {uniqueFollowings?.map((friend) => (
+                <React.Fragment key={friend}> */}
                   {/* <UserCard
                   key={friend}
                   friend={friend}
                   forceUpdate={forceUpdate}
                   friends={uniqueFollowings}
                 /> */}
-                </React.Fragment>
-              ))}
+                {/* </React.Fragment>
+              ))} */}
             </motion.div>
           </motion.div>
         </motion.div>
