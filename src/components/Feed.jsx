@@ -47,13 +47,15 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
     fetchPosts();
   }, [username, currentUser._id, newCom]);
 
+  const post1 = posts.at(0);
+
   return (
     <>
       <Container className={classes.container}>
         {posts.map((p, index) => (
           <React.Fragment key={p._id}>
             <NewPost post={p} socket={socket} socketUser={socketUser} />
-            {p === posts.at(0) ? (
+            {p === post1 ? (
               // <NewSuggestedUsers username={username} />
               <p>Hello There</p>
             ) : null}
