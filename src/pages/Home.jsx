@@ -69,7 +69,7 @@ const Home = () => {
         </Grid>
         <Grid item sm={12} xs={12} md={7} lg={7} className={classes.center}>
           <div className={classes.centerFeed}>
-            <Feed newCom={newCom} forceUpdate={forceUpdate} />
+            <Feed newCom={newCom} />
           </div>
         </Grid>
         <Grid item md={3} lg={3} className={classes.right}>
