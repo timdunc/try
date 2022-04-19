@@ -1,7 +1,7 @@
 import { Container, makeStyles } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import NewPost from "./NewPost";
-import NewSuggestedUsers from "./NewSuggestedUsers";
+import SuggestedUsers from "./SuggestedUsers";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Feed = ({ username, socket, socketUser, newCom, forceUpdate}) => {
+const Feed = ({ username, socket, socketUser, newCom }) => {
   const classes = useStyles();
 
   const { user: currentUser } = useContext(AuthContext);
@@ -47,22 +47,23 @@ const Feed = ({ username, socket, socketUser, newCom, forceUpdate}) => {
     fetchPosts();
   }, [username, currentUser._id, newCom]);
 
-  const post1 = posts.at(0);
-
   return (
-    <>
-      <Container className={classes.container}>
+    <Container className={classes.container}>
+      <>
         {posts.map((p, index) => (
           <React.Fragment key={p._id}>
-            <NewPost post={p} socket={socket} socketUser={socketUser} />
-              {/* {p === post1 ? (
-                // <NewSuggestedUsers username={username} />
-                <p>Hello There</p>
-              ) : null} */}
+            <NewPost
+              post={p}
+              socket={socket}
+              socketUser={socketUser}
+            />
+            {/* {p === posts.at(0) ? (
+              <SuggestedUsers username={username} />
+            ) : null} */}
           </React.Fragment>
         ))}
-      </Container>
-    </>
+      </>
+    </Container>
   );
 };
 
