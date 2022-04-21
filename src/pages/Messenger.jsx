@@ -24,6 +24,7 @@ import Message from "../components/Message";
 import Conversation from "../components/Conversation";
 import { Send, UsbTwoTone } from "@material-ui/icons";
 import axios from "axios";
+import BottomNav from "../components/BottomNav";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -399,7 +400,7 @@ const Messenger = ({ own }) => {
               />
             </Grid>
           </Grid>
-          <Add />
+          <BottomNav />
         </ThemeProvider>
       </div>
     </>
