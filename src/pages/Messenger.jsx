@@ -6,13 +6,13 @@ import {
   CardHeader,
   createTheme,
   Grid,
-  IconButton,
   Input,
   InputAdornment,
   makeStyles,
   TextField,
 } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
+import Add from "../components/Add";
 import Navbar from "../components/Navbar";
 import Rightbar from "../components/Rightbar";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
@@ -22,8 +22,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Message from "../components/Message";
 import Conversation from "../components/Conversation";
-import { ArrowBackIosRounded, MoreVert, Send, UsbTwoTone } from "@material-ui/icons";
-import BottomNav from "../components/BottomNav";
+import { Send, UsbTwoTone } from "@material-ui/icons";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -221,9 +220,7 @@ const Messenger = ({ own }) => {
     const getUser = async () => {
       try {
         const res = friendId
-          ? await axios(
-              "https://sinzi.herokuapp.com/api/users?userId=" + friendId
-            )
+          ? await axios("https://sinzi.herokuapp.com/api/users?userId=" + friendId)
           : await axios(
               "https://sinzi.herokuapp.com/api/users?userId=" + currentUser._id
             );
@@ -247,67 +244,61 @@ const Messenger = ({ own }) => {
         <ThemeProvider theme={darkTheme}>
           <Navbar />
           <Grid container>
-            <Grid item sm={12} xs={12}>
+            <Grid item sm={2} xs={2}>
+              <div className={classes.conversations}>
+                <Card className={classes.container}>
+                  <div style={{ marginTop: "5px" }}>
+                    <form noValidate autoComplete="off">
+                      <TextField
+                        className={classes.margin}
+                        id="input-with-icon-textfield"
+                        label="Search for friends..."
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <SupervisedUserCircleIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </form>
+                  </div>
+                  <CardContent>
+                    {conversations.map((c) => (
+                      <div key={c._id} onClick={() => setCurrentChat(c)}>
+                        <Conversation
+                          key={c._id}
+                          conversation={c}
+                          onlineUsers={onlineUsers}
+                        />
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </div>
+            </Grid>
+            <Grid item sm={7} xs={10}>
               {currentChat ? (
                 <>
                   <div className={classes.messageArea}>
-                    <Card className={classes.cardMessage} style={{ marginTop: "-15px" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          marginTop: "5px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <IconButton
-                            onClick={() => setCurrentChat(null)}
-                            aria-label="Back"
-                            style={{
-                              marginTop: "20px",
-                            }}
-                          >
-                            <ArrowBackIosRounded
-                              style={{
-                                // marginRight: "-20px",
-                                fontWeight: "bold",
-                              }}
-                            />
-                          </IconButton>
-                          <CardHeader
-                            avatar={
-                              <Avatar
-                                src={PF + user.profilePicture}
-                                className={classes.avatar}
-                              />
-                            }
-                            title={user.username}
-                            subheader={
-                              active.length === 1 ? (
-                                <div style={{ color: "#2e7d32" }}>online ●</div>
-                              ) : (
-                                "offline"
-                              )
-                            }
-                            style={{ marginTop: "20px" }}
+                    <Card className={classes.cardMessage}>
+                      <CardHeader
+                        avatar={
+                          <Avatar
+                            src={PF + user.profilePicture}
+                            className={classes.avatar}
                           />
-                        </div>
-                        <IconButton
-                          aria-label="settings"
-                          style={{
-                            marginTop: "20px",
-                          }}
-                        >
-                          <MoreVert />
-                        </IconButton>
-                      </div>
+                        }
+                        title={user.username}
+                        subheader={
+                          active.length === 1 ? (
+                            <div style={{ color: "#2e7d32" }}>online ●</div>
+                          ) : (
+                            "offline"
+                          )
+                        }
+                        style={{ marginTop: "20px" }}
+                      />
                       <div
                         style={{
                           marginTop: "-10px",
@@ -377,39 +368,26 @@ const Messenger = ({ own }) => {
                 </>
               ) : (
                 <>
-                  <Grid item sm={12} xs={12}>
-                    <div className={classes.conversations}>
-                      <Card className={classes.container}>
-                        <div style={{ marginTop: "5px" }}>
-                          <form noValidate autoComplete="off">
-                            <TextField
-                              className={classes.margin}
-                              id="input-with-icon-textfield"
-                              label="Search for friends..."
-                              InputProps={{
-                                startAdornment: (
-                                  <InputAdornment position="start">
-                                    <SupervisedUserCircleIcon />
-                                  </InputAdornment>
-                                ),
-                              }}
-                            />
-                          </form>
-                        </div>
-                        <CardContent>
-                          {conversations.map((c) => (
-                            <div key={c._id} onClick={() => setCurrentChat(c)}>
-                              <Conversation
-                                key={c._id}
-                                conversation={c}
-                                onlineUsers={onlineUsers}
-                              />
-                            </div>
-                          ))}
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </Grid>
+                  <div
+                    style={{
+                      position: "relative",
+                      marginTop: "150px",
+                      marginLeft: "50px",
+                      fontFamily: "roboto",
+                      color: "grey",
+                      opacity: "0.3",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "50px",
+                        cursor: "default",
+                      }}
+                    >
+                      Open a conversation to start a chat.
+                    </span>
+                  </div>
                 </>
               )}
             </Grid>
@@ -421,7 +399,7 @@ const Messenger = ({ own }) => {
               />
             </Grid>
           </Grid>
-          <BottomNav />
+          <Add />
         </ThemeProvider>
       </div>
     </>
