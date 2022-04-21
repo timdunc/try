@@ -10,7 +10,7 @@ import { format } from "timeago.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 375,
+    width: 325,
     marginTop: "10px",
     display: "flex",
     flexDirection: "column",
@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
   own: {
     display: "flex",
     justifyContent: "flex-end",
-    marginRight: "0px",
   },
   typo: {
     color: "white",
@@ -40,10 +39,10 @@ const useStyles = makeStyles((theme) => ({
 const Message = ({ message, own }) => {
   const classes = useStyles();
   return (
-    <div>
+    <>
       <div className={own ? classes.own : classes.message}>
         <div className="" style={{ marginBottom: "5px" }}>
-          <div style={{ width: "50%" }}>
+          <div style={{ width: "100%" }} className="">
             <Card
               className={classes.root}
               style={
@@ -74,7 +73,7 @@ const Message = ({ message, own }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
