@@ -29,6 +29,8 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
 
   const [posts, setPosts] = useState([]);
 
+  const [firstPost, setFirstPost] = useState(posts.at(0));
+
   useEffect(() => {
     const fetchPosts = async () => {
       const res = username
@@ -57,9 +59,10 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
               socket={socket}
               socketUser={socketUser}
             />
-            {/* {p === posts.at(0) ? (
-              <SuggestedUsers username={username} />
-            ) : null} */}
+            {p === firstPost ? (
+              // <SuggestedUsers username={username} />
+              <span>Hello There</span>
+            ) : null}
           </React.Fragment>
         ))}
       </>
