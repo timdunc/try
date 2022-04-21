@@ -29,7 +29,7 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
 
   const [posts, setPosts] = useState([]);
 
-  const [firstPost, setFirstPost] = useState({});
+  // const [firstPost, setFirstPost] = useState({});
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -49,9 +49,9 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
     fetchPosts();
   }, [username, currentUser._id, newCom]);
 
-  useEffect(() => {
-    setFirstPost(posts?.at(0));
-  }, [posts]);
+  // useEffect(() => {
+  //   setFirstPost(posts?.at(0));
+  // }, [posts]);
 
   return (
     <>
