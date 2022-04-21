@@ -6,6 +6,7 @@ import {
   CardHeader,
   createTheme,
   Grid,
+  IconButton,
   Input,
   InputAdornment,
   makeStyles,
@@ -17,13 +18,15 @@ import Navbar from "../components/Navbar";
 import Rightbar from "../components/Rightbar";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 
-import { io } from "socket.io-client";
+//   import { io } from "socket.io-client";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Message from "../components/Message";
 import Conversation from "../components/Conversation";
-import { Send, UsbTwoTone } from "@material-ui/icons";
+import { ArrowBackIosRounded, MoreVert, Send } from "@material-ui/icons";
 import axios from "axios";
+
+import BottomNav from "../components/BottomNav";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,13 +46,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   container: {
-    marginTop: "65px",
-    height: "629px",
+    marginTop: "50px",
+    height: "100vh",
   },
   messageArea: {
-    marginTop: "65px",
-    paddingLeft: 24,
-    paddingRight: 24,
+    marginTop: "50px",
+    paddingLeft: 0,
+    paddingRight: 0,
   },
   cardMessage: {
     width: "100%",
@@ -66,7 +69,7 @@ const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#1976d2",
+      main: "#a00000",
     },
   },
 });
@@ -117,16 +120,16 @@ const Messenger = ({ own }) => {
   }, [friends, onlineUsers]);
 
   //setting socket and getting new messages
-  useEffect(() => {
-    socket.current = io("ws://localhost:5000");
-    socket.current.on("getMessage", (data) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        createdAt: Date.now(),
-      });
-    });
-  }, []);
+  // useEffect(() => {
+  //   socket.current = io("ws://localhost:5000");
+  //   socket.current.on("getMessage", (data) => {
+  //     setArrivalMessage({
+  //       sender: data.senderId,
+  //       text: data.text,
+  //       createdAt: Date.now(),
+  //     });
+  //   });
+  // }, []);
 
   useEffect(() => {
     arrivalMessage &&
@@ -220,7 +223,9 @@ const Messenger = ({ own }) => {
     const getUser = async () => {
       try {
         const res = friendId
-          ? await axios("https://sinzi.herokuapp.com/api/users?userId=" + friendId)
+          ? await axios(
+              "https://sinzi.herokuapp.com/api/users?userId=" + friendId
+            )
           : await axios(
               "https://sinzi.herokuapp.com/api/users?userId=" + currentUser._id
             );
@@ -240,65 +245,73 @@ const Messenger = ({ own }) => {
 
   return (
     <>
-      <div>
         <ThemeProvider theme={darkTheme}>
           <Navbar />
-          <Grid container>
-            <Grid item sm={2} xs={2}>
-              <div className={classes.conversations}>
-                <Card className={classes.container}>
-                  <div style={{ marginTop: "5px" }}>
-                    <form noValidate autoComplete="off">
-                      <TextField
-                        className={classes.margin}
-                        id="input-with-icon-textfield"
-                        label="Search for friends..."
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <SupervisedUserCircleIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </form>
-                  </div>
-                  <CardContent>
-                    {conversations.map((c) => (
-                      <div key={c._id} onClick={() => setCurrentChat(c)}>
-                        <Conversation
-                          key={c._id}
-                          conversation={c}
-                          onlineUsers={onlineUsers}
-                        />
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              </div>
-            </Grid>
-            <Grid item sm={7} xs={10}>
+          <Grid style={{ width: "100vw" }} container>
+            <Grid item sm={12} xs={12} style={{ width: "100%" }}>
               {currentChat ? (
                 <>
                   <div className={classes.messageArea}>
-                    <Card className={classes.cardMessage}>
-                      <CardHeader
-                        avatar={
-                          <Avatar
-                            src={PF + user.profilePicture}
-                            className={classes.avatar}
+                    <Card
+                      className={classes.cardMessage}
+                      style={{ width: "100vw" }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginTop: "5px",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <IconButton
+                            onClick={() => setCurrentChat(null)}
+                            aria-label="Back"
+                            style={{
+                              marginTop: "20px",
+                            }}
+                          >
+                            <ArrowBackIosRounded
+                              style={{
+                                // marginRight: "-20px",
+                                fontWeight: "bold",
+                              }}
+                            />
+                          </IconButton>
+                          <CardHeader
+                            avatar={
+                              <Avatar
+                                src={PF + user.profilePicture}
+                                className={classes.avatar}
+                              />
+                            }
+                            title={user.username}
+                            subheader={
+                              active.length === 1 ? (
+                                <div style={{ color: "#2e7d32" }}>online ●</div>
+                              ) : (
+                                "offline"
+                              )
+                            }
+                            style={{ marginTop: "20px" }}
                           />
-                        }
-                        title={user.username}
-                        subheader={
-                          active.length === 1 ? (
-                            <div style={{ color: "#2e7d32" }}>online ●</div>
-                          ) : (
-                            "offline"
-                          )
-                        }
-                        style={{ marginTop: "20px" }}
-                      />
+                        </div>
+                        <IconButton
+                          aria-label="settings"
+                          style={{
+                            marginTop: "20px",
+                          }}
+                        >
+                          <MoreVert />
+                        </IconButton>
+                      </div>
                       <div
                         style={{
                           marginTop: "-10px",
@@ -312,14 +325,14 @@ const Messenger = ({ own }) => {
                         <CardContent
                           style={{
                             marginTop: "-25px",
-                            height: "",
+                            // height: "70%",
                             display: "flex",
                             flexDirection: "column",
                             position: "relative",
                           }}
                         >
                           {messages.map((m) => (
-                            <div key={m._id} ref={scrollRef}>
+                            <div key={m._id} ref={scrollRef} style={{ marginBottom: "-10px" }}>
                               <Message
                                 key={m._id}
                                 message={m}
@@ -330,7 +343,13 @@ const Messenger = ({ own }) => {
                         </CardContent>
                       </div>
                     </Card>
-                    <Card style={{ marginTop: "5px", display: "flex" }}>
+                    <Card
+                      style={{
+                        marginTop: "3px",
+                        display: "flex",
+                        width: "100vw",
+                      }}
+                    >
                       <div style={{ width: "90%", marginRight: "15px" }}>
                         <Input
                           onChange={(e) => setNewMessage(e.target.value)}
@@ -367,41 +386,51 @@ const Messenger = ({ own }) => {
                   </div>
                 </>
               ) : (
-                <>
-                  <div
-                    style={{
-                      position: "relative",
-                      marginTop: "150px",
-                      marginLeft: "50px",
-                      fontFamily: "roboto",
-                      color: "grey",
-                      opacity: "0.3",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "50px",
-                        cursor: "default",
-                      }}
-                    >
-                      Open a conversation to start a chat.
-                    </span>
+                <Grid item sm={12} xs={12}>
+                  <div className={classes.conversations}>
+                    <Card className={classes.container}>
+                      <div style={{ marginTop: "5px" }}>
+                        <form noValidate autoComplete="off">
+                          <TextField
+                            className={classes.margin}
+                            id="input-with-icon-textfield"
+                            label="Search for friends..."
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <SupervisedUserCircleIcon />
+                                </InputAdornment>
+                              ),
+                            }}
+                          />
+                        </form>
+                      </div>
+                      <CardContent>
+                        {conversations.map((c) => (
+                          <div key={c._id} onClick={() => setCurrentChat(c)}>
+                            <Conversation
+                              key={c._id}
+                              conversation={c}
+                              onlineUsers={onlineUsers}
+                            />
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
                   </div>
-                </>
+                </Grid>
               )}
             </Grid>
-            <Grid item sm={3} className={classes.right}>
+            {/* <Grid item sm={0} className={classes.right}>
               <Rightbar
                 onlineUsers={onlineUsers}
                 currentUser={currentUser._id}
                 setCurrentChat={setCurrentChat}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
-          <Add />
+          <BottomNav />
         </ThemeProvider>
-      </div>
     </>
   );
 };
