@@ -59,12 +59,12 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
         {posts.map((p, index) => (
           <React.Fragment key={p._id}>
             <NewPost post={p} socket={socket} socketUser={socketUser} />
-            {p === firstPost ? (
+            {/* {p === firstPost ? (
               // <SuggestedUsers username={username} />
               <div>
                 <span>Hello There</span>
               </div>
-            ) : (<div></div>)}
+            ) : (<div></div>)} */}
           </React.Fragment>
         ))}
       </Container>

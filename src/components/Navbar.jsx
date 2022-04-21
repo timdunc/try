@@ -117,7 +117,9 @@ const Navbar = () => {
             onClick={() => setOpen(true)}
           />
           <Badge badgeContent={4} color="primary" className={classes.badge}>
-            <Mail />
+            <Link to="/messenger" style={{ textDecoration: "none", color: "white" }}>
+              <Mail />
+            </Link>
           </Badge>
           <Badge badgeContent={2} color="primary" className={classes.badge}>
             <Notifications />
