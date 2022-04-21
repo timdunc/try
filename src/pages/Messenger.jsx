@@ -69,7 +69,7 @@ const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#1976d2",
+      main: "#a00000",
     },
   },
 });
@@ -245,7 +245,6 @@ const Messenger = ({ own }) => {
 
   return (
     <>
-      <div>
         <ThemeProvider theme={darkTheme}>
           <Navbar />
           <Grid style={{ width: "100vw" }} container>
@@ -326,14 +325,14 @@ const Messenger = ({ own }) => {
                         <CardContent
                           style={{
                             marginTop: "-25px",
-                            height: "70%",
+                            // height: "70%",
                             display: "flex",
                             flexDirection: "column",
                             position: "relative",
                           }}
                         >
                           {messages.map((m) => (
-                            <div key={m._id} ref={scrollRef}>
+                            <div key={m._id} ref={scrollRef} style={{ marginBottom: "-10px" }}>
                               <Message
                                 key={m._id}
                                 message={m}
@@ -432,7 +431,6 @@ const Messenger = ({ own }) => {
           </Grid>
           <BottomNav />
         </ThemeProvider>
-      </div>
     </>
   );
 };
