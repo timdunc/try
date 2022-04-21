@@ -13,20 +13,18 @@ import {
   TextField,
 } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import Add from "../components/Add";
 import Navbar from "../components/Navbar";
 import Rightbar from "../components/Rightbar";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 
-//   import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Message from "../components/Message";
 import Conversation from "../components/Conversation";
-import { ArrowBackIosRounded, MoreVert, Send } from "@material-ui/icons";
-import axios from "axios";
-
+import { ArrowBackIosRounded, MoreVert, Send, UsbTwoTone } from "@material-ui/icons";
 import BottomNav from "../components/BottomNav";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,13 +44,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   container: {
-    marginTop: "50px",
-    height: "100vh",
+    marginTop: "65px",
+    height: "629px",
   },
   messageArea: {
-    marginTop: "50px",
-    paddingLeft: 0,
-    paddingRight: 0,
+    marginTop: "65px",
+    paddingLeft: 24,
+    paddingRight: 24,
   },
   cardMessage: {
     width: "100%",
@@ -69,7 +67,7 @@ const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#a00000",
+      main: "#1976d2",
     },
   },
 });
@@ -120,16 +118,16 @@ const Messenger = ({ own }) => {
   }, [friends, onlineUsers]);
 
   //setting socket and getting new messages
-  // useEffect(() => {
-  //   socket.current = io("ws://localhost:5000");
-  //   socket.current.on("getMessage", (data) => {
-  //     setArrivalMessage({
-  //       sender: data.senderId,
-  //       text: data.text,
-  //       createdAt: Date.now(),
-  //     });
-  //   });
-  // }, []);
+  useEffect(() => {
+    socket.current = io("ws://localhost:5000");
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
 
   useEffect(() => {
     arrivalMessage &&
@@ -245,17 +243,15 @@ const Messenger = ({ own }) => {
 
   return (
     <>
+      <div>
         <ThemeProvider theme={darkTheme}>
           <Navbar />
-          <Grid style={{ width: "100vw" }} container>
-            <Grid item sm={12} xs={12} style={{ width: "100%" }}>
+          <Grid container>
+            <Grid item sm={12} xs={12}>
               {currentChat ? (
                 <>
                   <div className={classes.messageArea}>
-                    <Card
-                      className={classes.cardMessage}
-                      style={{ width: "100vw" }}
-                    >
+                    <Card className={classes.cardMessage} style={{ marginTop: "-15px" }}>
                       <div
                         style={{
                           display: "flex",
@@ -325,14 +321,14 @@ const Messenger = ({ own }) => {
                         <CardContent
                           style={{
                             marginTop: "-25px",
-                            // height: "70%",
+                            height: "",
                             display: "flex",
                             flexDirection: "column",
                             position: "relative",
                           }}
                         >
                           {messages.map((m) => (
-                            <div key={m._id} ref={scrollRef} style={{ marginBottom: "-10px" }}>
+                            <div key={m._id} ref={scrollRef}>
                               <Message
                                 key={m._id}
                                 message={m}
@@ -343,13 +339,7 @@ const Messenger = ({ own }) => {
                         </CardContent>
                       </div>
                     </Card>
-                    <Card
-                      style={{
-                        marginTop: "3px",
-                        display: "flex",
-                        width: "100vw",
-                      }}
-                    >
+                    <Card style={{ marginTop: "5px", display: "flex" }}>
                       <div style={{ width: "90%", marginRight: "15px" }}>
                         <Input
                           onChange={(e) => setNewMessage(e.target.value)}
@@ -386,51 +376,54 @@ const Messenger = ({ own }) => {
                   </div>
                 </>
               ) : (
-                <Grid item sm={12} xs={12}>
-                  <div className={classes.conversations}>
-                    <Card className={classes.container}>
-                      <div style={{ marginTop: "5px" }}>
-                        <form noValidate autoComplete="off">
-                          <TextField
-                            className={classes.margin}
-                            id="input-with-icon-textfield"
-                            label="Search for friends..."
-                            InputProps={{
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <SupervisedUserCircleIcon />
-                                </InputAdornment>
-                              ),
-                            }}
-                          />
-                        </form>
-                      </div>
-                      <CardContent>
-                        {conversations.map((c) => (
-                          <div key={c._id} onClick={() => setCurrentChat(c)}>
-                            <Conversation
-                              key={c._id}
-                              conversation={c}
-                              onlineUsers={onlineUsers}
+                <>
+                  <Grid item sm={12} xs={12}>
+                    <div className={classes.conversations}>
+                      <Card className={classes.container}>
+                        <div style={{ marginTop: "5px" }}>
+                          <form noValidate autoComplete="off">
+                            <TextField
+                              className={classes.margin}
+                              id="input-with-icon-textfield"
+                              label="Search for friends..."
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <SupervisedUserCircleIcon />
+                                  </InputAdornment>
+                                ),
+                              }}
                             />
-                          </div>
-                        ))}
-                      </CardContent>
-                    </Card>
-                  </div>
-                </Grid>
+                          </form>
+                        </div>
+                        <CardContent>
+                          {conversations.map((c) => (
+                            <div key={c._id} onClick={() => setCurrentChat(c)}>
+                              <Conversation
+                                key={c._id}
+                                conversation={c}
+                                onlineUsers={onlineUsers}
+                              />
+                            </div>
+                          ))}
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </Grid>
+                </>
               )}
             </Grid>
-            {/* <Grid item sm={0} className={classes.right}>
+            <Grid item sm={3} className={classes.right}>
               <Rightbar
                 onlineUsers={onlineUsers}
                 currentUser={currentUser._id}
                 setCurrentChat={setCurrentChat}
               />
-            </Grid> */}
+            </Grid>
           </Grid>
           <BottomNav />
         </ThemeProvider>
+      </div>
     </>
   );
 };
