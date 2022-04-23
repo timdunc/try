@@ -17,12 +17,12 @@ import Navbar from "../components/Navbar";
 import Rightbar from "../components/Rightbar";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 
-import { io } from "socket.io-client";
+//   import { io } from "socket.io-client";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Message from "../components/Message";
 import Conversation from "../components/Conversation";
-import { Send, UsbTwoTone } from "@material-ui/icons";
+import { Send } from "@material-ui/icons";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -117,16 +117,16 @@ const Messenger = ({ own }) => {
   }, [friends, onlineUsers]);
 
   //setting socket and getting new messages
-  useEffect(() => {
-    socket.current = io("ws://localhost:5000");
-    socket.current.on("getMessage", (data) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        createdAt: Date.now(),
-      });
-    });
-  }, []);
+  // useEffect(() => {
+  //   socket.current = io("ws://localhost:5000");
+  //   socket.current.on("getMessage", (data) => {
+  //     setArrivalMessage({
+  //       sender: data.senderId,
+  //       text: data.text,
+  //       createdAt: Date.now(),
+  //     });
+  //   });
+  // }, []);
 
   useEffect(() => {
     arrivalMessage &&
