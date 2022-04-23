@@ -22,7 +22,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Message from "../components/Message";
 import Conversation from "../components/Conversation";
-import { Send } from "@material-ui/icons";
+import { Send, UsbTwoTone } from "@material-ui/icons";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -105,7 +105,7 @@ const Messenger = ({ own }) => {
   useEffect(() => {
     const getFriends = async () => {
       const res = await axios.get(
-        "http://localhost:8800/api/users/friends/" + currentUser._id
+        "https://sinzi.herokuapp.com/api/users/friends/" + currentUser._id
       );
       setFriends(res.data);
     };
@@ -136,21 +136,21 @@ const Messenger = ({ own }) => {
 
   //adding users to socket and getting onlineUsers
   //getting online users
-  useEffect(() => {
-    socket.current.emit("addUser", currentUser._id);
-    socket.current.on("getUsers", (users) => {
-      setOnlineUsers(
-        currentUser.followings.filter((f) => users.some((u) => u.userId === f))
-      );
-    });
-  }, [currentUser]);
+  // useEffect(() => {
+  //   socket.current.emit("addUser", currentUser._id);
+  //   socket.current.on("getUsers", (users) => {
+  //     setOnlineUsers(
+  //       currentUser.followings.filter((f) => users.some((u) => u.userId === f))
+  //     );
+  //   });
+  // }, [currentUser]);
 
   // getting Conversations
   useEffect(() => {
     const getConversations = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8800/api/conversations/" + currentUser._id
+          "https://sinzi.herokuapp.com/api/conversations/" + currentUser._id
         );
         setConversations(res.data);
       } catch (err) {
@@ -165,7 +165,7 @@ const Messenger = ({ own }) => {
     const getMessages = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8800/api/messages/" + currentChat?._id
+          "https://sinzi.herokuapp.com/api/messages/" + currentChat?._id
         );
         setMessages(res.data);
       } catch (err) {
@@ -188,15 +188,15 @@ const Messenger = ({ own }) => {
       (member) => member !== currentUser._id
     );
 
-    socket.current.emit("sendMessage", {
-      senderId: currentUser._id,
-      receiverId,
-      text: newMessage,
-    });
+    // socket.current.emit("sendMessage", {
+    //   senderId: currentUser._id,
+    //   receiverId,
+    //   text: newMessage,
+    // });
 
     try {
       const res = await axios.post(
-        "http://localhost:8800/api/messages",
+        "https://sinzi.herokuapp.com/api/messages",
         message
       );
       setMessages([...messages, res.data]);
@@ -220,9 +220,9 @@ const Messenger = ({ own }) => {
     const getUser = async () => {
       try {
         const res = friendId
-          ? await axios("http://localhost:8800/api/users?userId=" + friendId)
+          ? await axios("https://sinzi.herokuapp.com/api/users?userId=" + friendId)
           : await axios(
-              "http://localhost:8800/api/users?userId=" + currentUser._id
+              "https://sinzi.herokuapp.com/api/users?userId=" + currentUser._id
             );
         setUser(res.data);
       } catch (err) {
