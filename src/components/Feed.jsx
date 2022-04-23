@@ -49,9 +49,9 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
     fetchPosts();
   }, [username, currentUser._id, newCom]);
 
-  useEffect(() => {
-    setFirstPost(posts?.at(0));
-  }, [posts]);
+  // useEffect(() => {
+  //   setFirstPost(posts?.at(0));
+  // }, [posts]);
 
   return (
     <>
