@@ -22,7 +22,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Message from "../components/Message";
 import Conversation from "../components/Conversation";
-import { Send, UsbTwoTone } from "@material-ui/icons";
+import { Send } from "@material-ui/icons";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
