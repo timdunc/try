@@ -9,20 +9,12 @@ import {
   Divider,
 } from "@material-ui/core";
 import { AvatarGroup } from "@material-ui/lab";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(10),
     position: "sticky",
     top: 0,
-    [theme.breakpoints.up("sm")]: {
-      backgroundColor: "white",
-      color: "#555",
-      border: "1px solid #ece7e7",
-      position: "sticky",
-    },
   },
   title: {
     fontSize: 16,
@@ -36,55 +28,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Rightbar = ({ onlineUsers, currentUser, setCurrentChat }) => {
+const Rightbar = () => {
   const classes = useStyles();
-
-  const [friends, setFriends] = useState([]);
-  const [onlineFriends, setOnlineFriends] = useState([]);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  useEffect(() => {
-    const getFriends = async () => {
-      const res = await axios.get(
-        "https://sinzi.herokuapp.com/api/users/friends/" + currentUser
-      );
-      setFriends(res.data);
-    };
-    getFriends();
-  }, [currentUser]);
-
-  useEffect(() => {
-    setOnlineFriends(friends.filter((f) => onlineUsers.includes(f._id)));
-  }, [friends, onlineUsers]);
-
-  const handleClick = async (user) => {
-    try {
-      const res = await axios.get(
-        `https://sinzi.herokuapp.com/api/conversations/find/${currentUser}/${user._id}`
-      );
-      setCurrentChat(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <Container className={classes.container}>
       <Typography className={classes.title} gutterBottom>
         Online Friends
       </Typography>
-      <AvatarGroup max={6} style={{ marginBottom: 20, position: "relative" }}>
-        {onlineFriends.map((o) => (
-          <React.Fragment
-            key={o._id}
-            onClick={() => {
-              handleClick(o);
-            }}
-            style={{border: "none"}}
-          >
-            <Avatar key={o._id} alt={o.username} src={PF + o.profilePicture} style={{border: "2px solid white"}} title={o.username} />
-          </React.Fragment>
-        ))}
+      <AvatarGroup max={6} style={{ marginBottom: 20 }}>
+        <Avatar
+          alt="Remy Sharp"
+          src="https://material-ui.com/static/images/avatar/1.jpg"
+        />
+        <Avatar
+          alt="Travis Howard"
+          src="https://material-ui.com/static/images/avatar/2.jpg"
+        />
+        <Avatar
+          alt="Cindy Baker"
+          src="https://material-ui.com/static/images/avatar/3.jpg"
+        />
+        <Avatar alt="Agnes Walker" src="" />
+        <Avatar
+          alt="Trevor Henderson"
+          src="https://material-ui.com/static/images/avatar/6.jpg"
+        />
+        <Avatar
+          alt="Trevor Henderson"
+          src="https://material-ui.com/static/images/avatar/7.jpg"
+        />
+        <Avatar
+          alt="Trevor Henderson"
+          src="https://material-ui.com/static/images/avatar/8.jpg"
+        />
       </AvatarGroup>
       <Typography className={classes.title} gutterBottom>
         Gallery
