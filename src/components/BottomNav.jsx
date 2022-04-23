@@ -23,7 +23,7 @@ import {
   Cancel,
   PhotoCamera,
 } from "@material-ui/icons";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
