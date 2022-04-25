@@ -42,6 +42,16 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  conversationsSmall: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  conversationsLarge: {
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+  },
   container: {
     marginTop: "65px",
     height: "629px",
@@ -117,22 +127,22 @@ const Messenger = ({ own }) => {
   }, [friends, onlineUsers]);
 
   //setting socket and getting new messages
-  useEffect(() => {
-    socket.current = io("ws://localhost:5000");
-    socket.current.on("getMessage", (data) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        createdAt: Date.now(),
-      });
-    });
-  }, []);
+  // useEffect(() => {
+  //   socket.current = io("ws://localhost:5000");
+  //   socket.current.on("getMessage", (data) => {
+  //     setArrivalMessage({
+  //       sender: data.senderId,
+  //       text: data.text,
+  //       createdAt: Date.now(),
+  //     });
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
-      setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage, currentChat]);
+  // useEffect(() => {
+  //   arrivalMessage &&
+  //     currentChat?.members.includes(arrivalMessage.sender) &&
+  //     setMessages((prev) => [...prev, arrivalMessage]);
+  // }, [arrivalMessage, currentChat]);
 
   //adding users to socket and getting onlineUsers
   //getting online users
@@ -220,7 +230,9 @@ const Messenger = ({ own }) => {
     const getUser = async () => {
       try {
         const res = friendId
-          ? await axios("https://sinzi.herokuapp.com/api/users?userId=" + friendId)
+          ? await axios(
+              "https://sinzi.herokuapp.com/api/users?userId=" + friendId
+            )
           : await axios(
               "https://sinzi.herokuapp.com/api/users?userId=" + currentUser._id
             );
@@ -244,7 +256,7 @@ const Messenger = ({ own }) => {
         <ThemeProvider theme={darkTheme}>
           <Navbar />
           <Grid container>
-            <Grid item sm={2} xs={2}>
+            <Grid item sm={2} xs={2} className={classes.conversationsSmall}>
               <div className={classes.conversations}>
                 <Card className={classes.container}>
                   <div style={{ marginTop: "5px" }}>
@@ -277,11 +289,11 @@ const Messenger = ({ own }) => {
                 </Card>
               </div>
             </Grid>
-            <Grid item sm={7} xs={10}>
+            <Grid item sm={12} xs={12} md={10} lg={7}>
               {currentChat ? (
                 <>
                   <div className={classes.messageArea}>
-                    <Card className={classes.cardMessage}>
+                    <Card className={classes.cardMessage} style={{width: "100vw", marginLeft: "-17px"}}>
                       <CardHeader
                         avatar={
                           <Avatar
@@ -330,7 +342,7 @@ const Messenger = ({ own }) => {
                         </CardContent>
                       </div>
                     </Card>
-                    <Card style={{ marginTop: "5px", display: "flex" }}>
+                    <Card style={{ marginTop: "5px", display: "flex", width: "100vw", marginLeft: "-17px" }}>
                       <div style={{ width: "90%", marginRight: "15px" }}>
                         <Input
                           onChange={(e) => setNewMessage(e.target.value)}
@@ -368,25 +380,36 @@ const Messenger = ({ own }) => {
                 </>
               ) : (
                 <>
-                  <div
-                    style={{
-                      position: "relative",
-                      marginTop: "150px",
-                      marginLeft: "50px",
-                      fontFamily: "roboto",
-                      color: "grey",
-                      opacity: "0.3",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "50px",
-                        cursor: "default",
-                      }}
-                    >
-                      Open a conversation to start a chat.
-                    </span>
+                  <div className={classes.conversationsLarge} style={{width: '100vw'}}>
+                    <Card className={classes.container} style={{width: '100vw'}}>
+                      <div style={{ marginTop: "5px" }}>
+                        <form noValidate autoComplete="off">
+                          <TextField
+                            className={classes.margin}
+                            id="input-with-icon-textfield"
+                            label="Search for friends..."
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <SupervisedUserCircleIcon />
+                                </InputAdornment>
+                              ),
+                            }}
+                          />
+                        </form>
+                      </div>
+                      <CardContent>
+                        {conversations.map((c) => (
+                          <div key={c._id} onClick={() => setCurrentChat(c)}>
+                            <Conversation
+                              key={c._id}
+                              conversation={c}
+                              onlineUsers={onlineUsers}
+                            />
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
                   </div>
                 </>
               )}
