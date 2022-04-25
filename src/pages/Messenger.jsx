@@ -68,9 +68,8 @@ const useStyles = makeStyles((theme) => ({
     height: "629px",
   },
   messageArea: {
-    marginTop: "65px",
-    paddingLeft: 24,
-    paddingRight: 24,
+    // paddingLeft: 24,
+    // paddingRight: 24,
     [theme.breakpoints.down("sm")]: {
       // height: "100%",
     },
@@ -79,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     [theme.breakpoints.down("sm")]: {
       width: "100vw",
-      marginLeft: "-25px",
+      // marginLeft: "-25px",
       marginTop: "-10px",
     },
   },
@@ -89,8 +88,8 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "2px",
       display: "flex",
       width: "100vw",
-      marginLeft: "-25px",
-      marginBottom: "10px",
+      // marginLeft: "-25px",
+      // marginBottom: "10px",
     },
   },
   messageAreaSmall: {
@@ -323,7 +322,7 @@ const Messenger = ({ own }) => {
                 </Card>
               </div>
             </Grid>
-            <Grid item sm={12} xs={12} md={10} lg={7}>
+            <Grid item sm={12} xs={12} md={10} lg={7} style={{marginTop: "65px", marginBottom: "40px"}}>
               {currentChat ? (
                 <>
                   <div className={classes.messageArea}>
@@ -379,7 +378,7 @@ const Messenger = ({ own }) => {
                       <div
                         style={{
                           marginTop: "-10px",
-                          height: "530px",
+                          height: "500px",
                           marginBottom: "-30px",
                           overflow: "scroll",
                           overflowX: "hidden",
