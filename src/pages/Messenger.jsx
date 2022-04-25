@@ -71,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "65px",
     paddingLeft: 24,
     paddingRight: 24,
+    [theme.breakpoints.down("sm")]: {
+      // height: "100%",
+    },
   },
   cardMessage: {
     width: "100%",
@@ -87,7 +90,13 @@ const useStyles = makeStyles((theme) => ({
       display: "flex",
       width: "100vw",
       marginLeft: "-25px",
+      marginBottom: "10px",
     },
+  },
+  messageAreaSmall: {
+    // [theme.breakpoints.down("sm")]: {
+    //   height: "100px",
+    // },
   },
   conversations: {
     height: "77%",
