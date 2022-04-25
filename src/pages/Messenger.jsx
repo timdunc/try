@@ -138,11 +138,11 @@ const Messenger = ({ own }) => {
   //   });
   // }, []);
 
-  // useEffect(() => {
-  //   arrivalMessage &&
-  //     currentChat?.members.includes(arrivalMessage.sender) &&
-  //     setMessages((prev) => [...prev, arrivalMessage]);
-  // }, [arrivalMessage, currentChat]);
+  useEffect(() => {
+    arrivalMessage &&
+      currentChat?.members.includes(arrivalMessage.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
 
   //adding users to socket and getting onlineUsers
   //getting online users
@@ -293,7 +293,7 @@ const Messenger = ({ own }) => {
               {currentChat ? (
                 <>
                   <div className={classes.messageArea}>
-                    <Card className={classes.cardMessage} style={{width: "100vw", marginLeft: "-17px"}}>
+                    <Card className={classes.cardMessage} style={{width: "100vw", marginLeft: "-25px"}}>
                       <CardHeader
                         avatar={
                           <Avatar
@@ -342,7 +342,7 @@ const Messenger = ({ own }) => {
                         </CardContent>
                       </div>
                     </Card>
-                    <Card style={{ marginTop: "5px", display: "flex", width: "100vw", marginLeft: "-17px" }}>
+                    <Card style={{ marginTop: "5px", display: "flex", width: "100vw", marginLeft: "-25px" }}>
                       <div style={{ width: "90%", marginRight: "15px" }}>
                         <Input
                           onChange={(e) => setNewMessage(e.target.value)}
