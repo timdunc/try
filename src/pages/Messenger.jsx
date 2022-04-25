@@ -6,13 +6,14 @@ import {
   CardHeader,
   createTheme,
   Grid,
+  IconButton,
   Input,
   InputAdornment,
   makeStyles,
   TextField,
 } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import Add from "../components/Add";
+import BottomNav from "../components/BottomNav";
 import Navbar from "../components/Navbar";
 import Rightbar from "../components/Rightbar";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
@@ -22,7 +23,12 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Message from "../components/Message";
 import Conversation from "../components/Conversation";
-import { Send, UsbTwoTone } from "@material-ui/icons";
+import {
+  ArrowBackIosRounded,
+  MoreVert,
+  Send,
+  UsbTwoTone,
+} from "@material-ui/icons";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +52,11 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
+    // [theme.breakpoints.up("sm")]: {
+    //   width: "100vw",
+    //   marginLeft: "-25px",
+    //   marginTop: "0px",
+    // },
   },
   conversationsLarge: {
     [theme.breakpoints.up("sm")]: {
@@ -63,6 +74,20 @@ const useStyles = makeStyles((theme) => ({
   },
   cardMessage: {
     width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100vw",
+      marginLeft: "-25px",
+      marginTop: "-10px",
+    },
+  },
+  sendMessage: {
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "2px",
+      display: "flex",
+      width: "100vw",
+      marginLeft: "-25px",
+    },
   },
   conversations: {
     height: "77%",
@@ -293,24 +318,55 @@ const Messenger = ({ own }) => {
               {currentChat ? (
                 <>
                   <div className={classes.messageArea}>
-                    <Card className={classes.cardMessage} style={{width: "100vw", marginLeft: "-25px"}}>
-                      <CardHeader
-                        avatar={
-                          <Avatar
-                            src={PF + user.profilePicture}
-                            className={classes.avatar}
+                    <Card className={classes.cardMessage} style={{}}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <IconButton
+                            onClick={() => setCurrentChat(null)}
+                            aria-label="Back"
+                            style={{marginTop: "15px"}}
+                          >
+                            <ArrowBackIosRounded
+                              style={{
+                                marginRight: "-20px",
+                                marginLeft: "0px",
+                                fontWeight: "bold",
+                              }}
+                            />
+                          </IconButton>
+                          <CardHeader
+                            avatar={
+                              <Avatar
+                                src={PF + user.profilePicture}
+                                className={classes.avatar}
+                              />
+                            }
+                            title={user.username}
+                            subheader={
+                              active.length === 1 ? (
+                                <div style={{ color: "#2e7d32" }}>online ●</div>
+                              ) : (
+                                "offline"
+                              )
+                            }
+                            style={{ marginTop: "20px" }}
                           />
-                        }
-                        title={user.username}
-                        subheader={
-                          active.length === 1 ? (
-                            <div style={{ color: "#2e7d32" }}>online ●</div>
-                          ) : (
-                            "offline"
-                          )
-                        }
-                        style={{ marginTop: "20px" }}
-                      />
+                        </div>
+                        <IconButton aria-label="settings" style={{marginTop: "15px"}}>
+                          <MoreVert />
+                        </IconButton>
+                      </div>
                       <div
                         style={{
                           marginTop: "-10px",
@@ -342,7 +398,7 @@ const Messenger = ({ own }) => {
                         </CardContent>
                       </div>
                     </Card>
-                    <Card style={{ marginTop: "5px", display: "flex", width: "100vw", marginLeft: "-25px" }}>
+                    <Card style={{display: "flex",}} className={classes.sendMessage}>
                       <div style={{ width: "90%", marginRight: "15px" }}>
                         <Input
                           onChange={(e) => setNewMessage(e.target.value)}
@@ -353,7 +409,7 @@ const Messenger = ({ own }) => {
                             marginTop: "5px",
                             marginBottom: "5px",
                             marginLeft: "10px",
-                            width: "100%",
+                            width: "99%",
                           }}
                         />
                       </div>
@@ -380,8 +436,14 @@ const Messenger = ({ own }) => {
                 </>
               ) : (
                 <>
-                  <div className={classes.conversationsLarge} style={{width: '100vw'}}>
-                    <Card className={classes.container} style={{width: '100vw'}}>
+                  <div
+                    className={classes.conversationsLarge}
+                    style={{ width: "100vw" }}
+                  >
+                    <Card
+                      className={classes.container}
+                      style={{ width: "100vw" }}
+                    >
                       <div style={{ marginTop: "5px" }}>
                         <form noValidate autoComplete="off">
                           <TextField
@@ -422,7 +484,7 @@ const Messenger = ({ own }) => {
               />
             </Grid>
           </Grid>
-          <Add />
+          <BottomNav />
         </ThemeProvider>
       </div>
     </>
