@@ -42,9 +42,10 @@ const useStyles = makeStyles((theme) => ({
   },
   margin: {
     margin: theme.spacing(2),
+    width: "90%",
   },
   right: {
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       display: "none",
     },
   },
@@ -446,7 +447,7 @@ const Messenger = ({ own }) => {
                 <>
                   <div
                     className={classes.conversationsLarge}
-                    style={{ width: "100vw" }}
+                    style={{ width: "100vw", marginTop: "-80px" }}
                   >
                     <Card
                       className={classes.container}
@@ -468,15 +469,15 @@ const Messenger = ({ own }) => {
                           />
                         </form>
                       </div>
-                      <CardContent>
+                      <CardContent style={{}}>
                         {conversations.map((c) => (
-                          <div key={c._id} onClick={() => setCurrentChat(c)}>
+                          <React.Fragment key={c._id} onClick={() => setCurrentChat(c)} style={{width: "100%"}}>
                             <Conversation
                               key={c._id}
                               conversation={c}
                               onlineUsers={onlineUsers}
                             />
-                          </div>
+                          </React.Fragment>
                         ))}
                       </CardContent>
                     </Card>

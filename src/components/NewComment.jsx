@@ -211,7 +211,7 @@ const NewComment = ({ post, comment, newCom, forceUpdate }) => {
           gutterBottom
           style={{fontWeight: "bold"}}
         >
-          {format(post.createdAt)}
+          {format(comment.createdAt)}
         </Typography>
       </div>
     </Paper>
