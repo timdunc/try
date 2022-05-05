@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   margin: {
     margin: theme.spacing(2),
-    width: "90%",
+    width: "92%",
   },
   right: {
     [theme.breakpoints.down("md")]: {
@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
     // paddingLeft: 24,
     // paddingRight: 24,
     [theme.breakpoints.down("sm")]: {
-      // height: "100%",
+      // height: "100vw",
     },
   },
   cardMessage: {
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100vw",
       // marginLeft: "-25px",
-      marginTop: "-10px",
+      marginTop: "-5px",
     },
   },
   sendMessage: {
@@ -228,7 +228,7 @@ const Messenger = ({ own }) => {
       conversationId: currentChat._id,
     };
 
-    const receiverId = currentChat.members.find(
+    const receiverId = currentChat?.members.find(
       (member) => member !== currentUser._id
     );
 
@@ -309,11 +309,10 @@ const Messenger = ({ own }) => {
                       />
                     </form>
                   </div>
-                  <CardContent>
+                  <CardContent style={{ marginTop: "-30px" }}>
                     {conversations.map((c) => (
-                      <div key={c._id} onClick={() => setCurrentChat(c)}>
+                      <div key={c._id} onClick={() => setCurrentChat(c)} >
                         <Conversation
-                          key={c._id}
                           conversation={c}
                           onlineUsers={onlineUsers}
                         />
@@ -348,7 +347,7 @@ const Messenger = ({ own }) => {
                           >
                             <ArrowBackIosRounded
                               style={{
-                                marginRight: "-20px",
+                                marginRight: "0px",
                                 marginLeft: "0px",
                                 fontWeight: "bold",
                               }}
@@ -379,7 +378,7 @@ const Messenger = ({ own }) => {
                       <div
                         style={{
                           marginTop: "-10px",
-                          height: "500px",
+                          height: "522px",
                           marginBottom: "-30px",
                           overflow: "scroll",
                           overflowX: "hidden",
@@ -469,15 +468,14 @@ const Messenger = ({ own }) => {
                           />
                         </form>
                       </div>
-                      <CardContent style={{}}>
+                      <CardContent style={{ marginTop: "-30px" }}>
                         {conversations.map((c) => (
-                          <React.Fragment key={c._id} onClick={() => setCurrentChat(c)} style={{width: "100%"}}>
+                          <div key={c._id} onClick={() => setCurrentChat(c)} style={{width: "100%"}}>
                             <Conversation
-                              key={c._id}
                               conversation={c}
                               onlineUsers={onlineUsers}
                             />
-                          </React.Fragment>
+                          </div>
                         ))}
                       </CardContent>
                     </Card>
