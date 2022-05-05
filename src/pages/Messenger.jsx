@@ -67,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: "65px",
     height: "629px",
+    [theme.breakpoints.down("sm")]: {
+      height: "622px",
+      marginTop: "56px",
+    },
   },
   messageArea: {
     // paddingLeft: 24,
@@ -378,7 +382,7 @@ const Messenger = ({ own }) => {
                       <div
                         style={{
                           marginTop: "-10px",
-                          height: "522px",
+                          height: "505px",
                           marginBottom: "-30px",
                           overflow: "scroll",
                           overflowX: "hidden",
@@ -452,7 +456,7 @@ const Messenger = ({ own }) => {
                       className={classes.container}
                       style={{ width: "100vw" }}
                     >
-                      <div style={{ marginTop: "5px" }}>
+                      <div style={{ marginTop: "2.5px" }}>
                         <form noValidate autoComplete="off">
                           <TextField
                             className={classes.margin}
