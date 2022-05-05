@@ -10,7 +10,7 @@ import { format } from "timeago.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 325,
+    width: 325,
     marginTop: "2px",
     display: "flex",
     flexDirection: "column",
