@@ -165,7 +165,6 @@ const NewPost = ({ post }) => {
         })
       );
     };
-    setDesc("");
     fetchComment();
   }, [post, newCom]);
 
@@ -226,10 +225,10 @@ const NewPost = ({ post }) => {
         //   receiverId: user._id,
         //   type,
         // });
+        setDesc("");
         forceUpdate();
         setTransition(() => Transition);
         setOpenMessage(true);
-        setDesc("");
       } catch (err) {
         console.log(err);
       }
