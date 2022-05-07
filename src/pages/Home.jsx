@@ -76,7 +76,7 @@ const Home = () => {
           <Rightbar currentUser={user._id} />
         </Grid>
       </Grid>
-      <Add />
+      <Add forceUpdate={forceUpdate} />
       <BottomNav forceUpdate={forceUpdate} />
     </>
   );

@@ -114,7 +114,7 @@ const Add = ({ forceUpdate }) => {
 
   const handleClick = (Transition) => async (e) => {
     e.preventDefault();
-    
+
     uploadFiles(file);
 
     const newPost = {
@@ -141,7 +141,7 @@ const Add = ({ forceUpdate }) => {
     try {
       await axios.post("https://sinzi.herokuapp.com/api/posts", newPost);
       setTransition(() => Transition);
-      // forceUpdate();
+      forceUpdate();
       setOpenMessage(true);
       setOpen(false);
     } catch (err) {
@@ -165,6 +165,12 @@ const Add = ({ forceUpdate }) => {
           className={classes.container}
           style={{ backgroundColor: "white" }}
         >
+          <form onSubmit={formHandler}>
+            <input type="file" />
+            <Button variant="contained" color="secondary" type="submit">
+              Upload Image
+            </Button>
+          </form>
           <form
             className={classes.form}
             autoComplete="off"
@@ -215,14 +221,27 @@ const Add = ({ forceUpdate }) => {
                 <Card className={classes.CardImg}>
                   <CardActionArea>
                     <div>
-                    <img
-                      className={classes.media}
-                      src={URL.createObjectURL(file)}
-                      alt={file.name}
-                      style={{position: "relative", objectFit: "cover", width: "100%", height: "100%"}}
-                    />
+                      <img
+                        className={classes.media}
+                        src={URL.createObjectURL(file)}
+                        alt={file.name}
+                        style={{
+                          position: "relative",
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                      />
                     </div>
-                      <Cancel onClick={() => setFile(null)} style={{position: "absolute", top: "2px", right: "2px", opacity: "0.7"}} />
+                    <Cancel
+                      onClick={() => setFile(null)}
+                      style={{
+                        position: "absolute",
+                        top: "2px",
+                        right: "2px",
+                        opacity: "0.7",
+                      }}
+                    />
                   </CardActionArea>
                 </Card>
               </div>
@@ -240,16 +259,6 @@ const Add = ({ forceUpdate }) => {
               </Button>
             </div>
           </form>
-          <form onSubmit={formHandler} >
-              <input type="file" />
-              <Button
-                variant="contained"
-                color="secondary"
-                type="submit"
-                >
-                try
-              </Button>
-                </form>
         </Container>
       </Modal>
       <Snackbar

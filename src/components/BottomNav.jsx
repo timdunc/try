@@ -28,6 +28,8 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
   BottomNav: {
@@ -83,7 +85,39 @@ const BottomNav = ({ forceUpdate }) => {
   const { user } = useContext(AuthContext);
 
   const [desc, setDesc] = useState("");
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [url, setUrl] = useState("");
+
+  const formHandler = (e) => {
+    e.preventDefault();
+    const file = e.target[0].files[0];
+    uploadFiles(file);
+    setFile(file);
+  };
+
+  const uploadFiles = (file) => {
+    //
+    if (!file) return;
+    const storageRef = ref(storage, `files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(prog);
+      },
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setUrl(downloadURL);
+        });
+      }
+    );
+  };
 
   const handleClick = (Transition) => async (e) => {
     e.preventDefault();
@@ -96,10 +130,10 @@ const BottomNav = ({ forceUpdate }) => {
     if (file) {
       const data = new FormData();
 
-      const fileName = Date.now() + file.name;
+      const fileName = url;
       data.append("name", fileName);
       data.append("file", file);
-
+      // data.append("file", url);
       newPost.img = fileName;
 
       try {
@@ -192,6 +226,12 @@ const BottomNav = ({ forceUpdate }) => {
           className={classes.container}
           style={{ backgroundColor: "white" }}
         >
+          <form onSubmit={formHandler}>
+            <input type="file" />
+            <Button variant="contained" color="secondary" type="submit">
+              Upload Image
+            </Button>
+          </form>
           <form
             className={classes.form}
             autoComplete="off"

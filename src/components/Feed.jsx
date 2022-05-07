@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Feed = ({ username, socket, socketUser, newCom }) => {
+const Feed = ({ username, socket, socketUser, newCom, forceUpdate }) => {
   const classes = useStyles();
 
   const { user: currentUser } = useContext(AuthContext);
@@ -58,7 +58,7 @@ const Feed = ({ username, socket, socketUser, newCom }) => {
       <Container className={classes.container}>
         {posts.map((p, index) => (
           <React.Fragment key={p._id}>
-            <NewPost post={p} socket={socket} socketUser={socketUser} />
+            <NewPost post={p} socket={socket} socketUser={socketUser} forceUpdate={forceUpdate} />
             {/* {p === firstPost ? (
               // <SuggestedUsers username={username} />
               <div>
