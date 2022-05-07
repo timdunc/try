@@ -241,7 +241,10 @@ const NewPost = ({ post }) => {
 
   return (
     <>
-      <Card sx={{  }} style={{ marginBottom: "10px", marginLeft: "8.5px", width: "100%"}}>
+      <Card
+        sx={{}}
+        style={{ marginBottom: "10px", marginLeft: "8.5px", width: "100%" }}
+      >
         <div
           style={{
             display: "flex",
@@ -274,15 +277,15 @@ const NewPost = ({ post }) => {
             <MoreVertRounded />
           </IconButton>
         </div>
-        <CardMedia
-          component="img"
-          // height="194"
-          image={PF + post.img}
-          alt={post.desc}
-          className={classes.media}
-          style={{ marginBottom: "-5px" }}
-          onClick={() => setOpen(true)}
-        />
+          <CardMedia
+            component="img"
+            // height="194"
+            image={post.img}
+            alt={post.desc}
+            className={classes.media}
+            style={{ marginBottom: "-5px" }}
+            onClick={() => setOpen(true)}
+          />
         <CardActions className={classes.cardActions} style={{ height: "30px" }}>
           <CardActions>
             {isLiked && (
@@ -466,7 +469,7 @@ const NewPost = ({ post }) => {
                   <CardMedia
                     component="img"
                     // height="194"
-                    image={PF + post.img}
+                    image={post.img}
                     alt={post.desc}
                     className={classes.media}
                     style={{ marginBottom: "-5px", marginTop: "-10px" }}
@@ -577,7 +580,7 @@ const NewPost = ({ post }) => {
                   <CardActions></CardActions>
                 </CardActions>
               </CardContent>
-              <CardContent style={{marginBottom: "25px"}}>
+              <CardContent style={{ marginBottom: "25px" }}>
                 <>
                   {comments.map((comment) => (
                     <NewComment

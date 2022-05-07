@@ -17,6 +17,8 @@ import { Add as AddIcon, Cancel, PhotoCamera } from "@material-ui/icons";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -76,10 +78,44 @@ const Add = ({ forceUpdate }) => {
   const { user } = useContext(AuthContext);
 
   const [desc, setDesc] = useState("");
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [url, setUrl] = useState("");
+
+  const formHandler = (e) => {
+    e.preventDefault();
+    const file = e.target[0].files[0];
+    uploadFiles(file);
+    setFile(file);
+  };
+
+  const uploadFiles = (file) => {
+    //
+    if (!file) return;
+    const storageRef = ref(storage, `files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(prog);
+      },
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setUrl(downloadURL);
+        });
+      }
+    );
+  };
 
   const handleClick = (Transition) => async (e) => {
     e.preventDefault();
+    
+    uploadFiles(file);
 
     const newPost = {
       userId: user._id,
@@ -89,10 +125,10 @@ const Add = ({ forceUpdate }) => {
     if (file) {
       const data = new FormData();
 
-      const fileName = Date.now() + file.name;
+      const fileName = url;
       data.append("name", fileName);
       data.append("file", file);
-
+      // data.append("file", url);
       newPost.img = fileName;
 
       try {
@@ -105,7 +141,7 @@ const Add = ({ forceUpdate }) => {
     try {
       await axios.post("https://sinzi.herokuapp.com/api/posts", newPost);
       setTransition(() => Transition);
-      forceUpdate();
+      // forceUpdate();
       setOpenMessage(true);
       setOpen(false);
     } catch (err) {
@@ -158,7 +194,7 @@ const Add = ({ forceUpdate }) => {
               <div>
                 <label htmlFor="icon-button-file">
                   <Input
-                    onChange={(e) => setFile(e.target.files[0])}
+                    onChange={(e) => setFile(e.target[0].files[0])}
                     accept="image/*"
                     id="icon-button-file"
                     type="file"
@@ -204,6 +240,16 @@ const Add = ({ forceUpdate }) => {
               </Button>
             </div>
           </form>
+          <form onSubmit={formHandler} >
+              <input type="file" />
+              <Button
+                variant="contained"
+                color="secondary"
+                type="submit"
+                >
+                try
+              </Button>
+                </form>
         </Container>
       </Modal>
       <Snackbar
